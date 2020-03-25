@@ -6,7 +6,7 @@
 #    By: liz <liz@student.codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/21 17:37:27 by liz            #+#    #+#                 #
-#    Updated: 2020/03/21 19:48:43 by liz           ########   odam.nl          #
+#    Updated: 2020/03/25 13:07:05 by liz           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MLX = libmlx.a
 all: $(NAME)
 
 $(NAME):$(MLX) $(OBJ)
-		gcc -o $(NAME) cub3d.h ./mlx/mlx.h $(OBJ) libmlx.a -lm -lX11 -lXext
+		gcc -o $(NAME) cub3d.h ./mlx/mlx.h $(OBJ) libmlx.a -lm -lX11 -lXext -g
 
 $(MLX):
 		@make -C ./mlx
