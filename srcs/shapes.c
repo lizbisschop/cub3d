@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/01 19:36:51 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/08 14:38:03 by liz           ########   odam.nl         */
+/*   Updated: 2020/04/22 11:07:32 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int 	print_rectangle(int xw, int yw, int height, int width, unsigned int col, t_
 		yw++;
 		y++;
 	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.img, 0, 0);
 }
 
 int		print_circle(int x, int y, int r, t_data *data)
@@ -64,5 +64,5 @@ int		print_circle(int x, int y, int r, t_data *data)
     		my_mlx_pixel_put(data, xc+y, yc-x, 0xFF00FFFF); 
     		my_mlx_pixel_put(data, xc-y, yc-x, 0xFF00FFFF); 	
 		}
-		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+		mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.img, 0, 0);
 	}

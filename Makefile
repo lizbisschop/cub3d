@@ -6,7 +6,7 @@
 #    By: liz <liz@student.codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/21 17:37:27 by liz           #+#    #+#                  #
-#    Updated: 2020/04/08 13:57:15 by liz           ########   odam.nl          #
+#    Updated: 2020/04/23 11:50:39 by liz           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,13 @@ NAME = cub3d
 
 LIBFLIBFT = libft.a
 
-SRC = cub3d_try.c ./srcs/print_textures.c ./srcs/print_map.c ./srcs/libft_files.c ./srcs/hooks.c ./srcs/shapes.c ./srcs/read_map.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
+SRC = cub3d_real.c ./srcs/print_textures.c \
+./srcs/hooks.c ./srcs/shapes.c \
+./srcs/read_map.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
+./srcs/valid_map_check.c get_all_data.c img_filling.c exit.c \
+raycasting.c ./keys.c ./main_loop.c
+
+LIBLIBFT = libft.a
 
 OBJ = $(SRC:.c=.o)
 
@@ -25,7 +31,7 @@ MLX = libmlx.a
 all: $(NAME)
 
 $(NAME):$(MLX) $(OBJ) $(LILIBFT)
-		gcc -o $(NAME) $(INC) $(OBJ) $(MLX) libft.a -lm -lX11 -lXext -g
+		gcc -o $(NAME) $(INC) $(OBJ) libft.a $(MLX) -lm -lX11 -lXext -g
 
 $(MLX):
 		@make -C ./mlx
@@ -40,7 +46,7 @@ clean:
 		rm -f $(OBJ)
 
 fclean:	clean
-		rm -f $(LIBLIBFT)
+		# rm -f $(LIBLIBFT)
 		rm -f $(NAME)
 		rm -f $(MLX)
 
