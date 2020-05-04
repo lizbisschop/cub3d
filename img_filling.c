@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 11:58:07 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/23 13:06:58 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/04 14:16:08 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int 	draw_line(int x, int drawStart, int drawEnd, int color, t_data *data)
 
 	while (i < drawStart)
 	{
-		my_mlx_pixel_put(data, x, i, 0xFFFF00FF);
+		my_mlx_pixel_put(data, x, i, data->map.color);
 		i++;
 	}
 	while (y <= drawEnd)
@@ -59,8 +59,8 @@ int 	draw_line(int x, int drawStart, int drawEnd, int color, t_data *data)
 	}
 	while ( y < data->height)
 	{
-		my_mlx_pixel_put(data, x, y, 0xFF0000FF);
+		my_mlx_pixel_put(data, x, y, data->map.floor_color);
 		y++;
 	}
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.img, 0, 0);
+	// mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.img, 0, 0);
 }

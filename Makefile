@@ -6,7 +6,7 @@
 #    By: liz <liz@student.codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/21 17:37:27 by liz           #+#    #+#                  #
-#    Updated: 2020/04/23 11:50:39 by liz           ########   odam.nl          #
+#    Updated: 2020/05/02 11:17:37 by liz           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC = cub3d_real.c ./srcs/print_textures.c \
 ./srcs/hooks.c ./srcs/shapes.c \
 ./srcs/read_map.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
 ./srcs/valid_map_check.c get_all_data.c img_filling.c exit.c \
-raycasting.c ./keys.c ./main_loop.c
+raycasting.c ./keys.c ./main_loop.c functions.c \
 
 LIBLIBFT = libft.a
 
@@ -30,15 +30,15 @@ MLX = libmlx.a
 
 all: $(NAME)
 
-$(NAME):$(MLX) $(OBJ) $(LILIBFT)
+$(NAME):$(MLX) $(OBJ) $(LIBLIBFT)
 		gcc -o $(NAME) $(INC) $(OBJ) libft.a $(MLX) -lm -lX11 -lXext -g
 
-$(MLX):
-		@make -C ./mlx
-		@cp mlx/$(MLX) .
-$(LIBLIBFT):
-		@make -C ./libft
-		@cp libft/$(LIBLIBFT) .
+# $(MLX):
+# 		@make -C ./mlx
+# 		@cp mlx/$(MLX) .
+# $(LIBLIBFT):
+# 		@make -C ./libft
+# 		@cp libft/$(LIBLIBFT) .
 
 clean:
 		@make -C ./libft clean
@@ -48,6 +48,6 @@ clean:
 fclean:	clean
 		# rm -f $(LIBLIBFT)
 		rm -f $(NAME)
-		rm -f $(MLX)
+		# rm -f $(MLX)
 
 re:		fclean all

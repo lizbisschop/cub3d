@@ -6,11 +6,43 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 11:46:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/23 14:24:13 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/04 11:29:01 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int 	check_type(t_data *data)
+{
+	if (data->ray.type == 'E')
+	{
+		data->ray.dirY = 1.0;
+		data->ray.dirX = 0.0;
+		data->ray.planeX = -0.66;
+		data->ray.planeY = 0.0;
+	}
+	else if (data->ray.type == 'W')
+	{
+		data->ray.dirY = -1;
+		data->ray.dirX = 0.0;
+		data->ray.planeX = 0.66;
+		data->ray.planeY = 0.0;
+	}
+	else if (data->ray.type == 'N')
+	{
+		data->ray.dirY = 0.0;
+		data->ray.dirX = -1;
+		data->ray.planeX = 0.0;
+		data->ray.planeY = -0.66;
+	}
+	else if (data->ray.type == 'S')
+	{
+		data->ray.dirY = 0.0;
+		data->ray.dirX = 1.0;
+		data->ray.planeX = 0.0;
+		data->ray.planeY = 0.66;
+	}
+}
 
 int 	setting_mlx(t_data *data)
 {
@@ -22,53 +54,55 @@ int 	setting_mlx(t_data *data)
 
 int setting_raycasting(t_data *data)
 {
-	data->ray.dirX = -1;
-	data->ray.dirY = 0;
-	data->ray.planeX = 0;
-	data->ray.planeY = 0.66;
-	data->ray.time = 0;
-	data->ray.oldTime = 0;
 	data->ray.x_ray = 0;
 	data->map.valid_map = 0;
-	data->error.check_double = 0;
+	data->error.check_double_R = 0;
 	data->move.x = 0;
 	data->move.y = 0;
+	data->ray.moveSpeed = 0.09;
+	data->ray.rotSpeed = 0.09;
+	
+
 
 }
 
-int 	get_all_data(t_data *data)
+int 	get_all_data(t_data *data, char **argv)
 {
 	int x;
 	int y;
 
-	// get_structs(data);
-	// x = data->ray.posX;
-	// y = data->ray.posY;
 	setting_mlx(data);
-
-	data->str_cnt = save_map_in_array(data);
+	setting_raycasting(data);
+	data->str_cnt = save_map_in_array(data, argv);
+	// print_rectangle(30, 30, 80, 80, data->map.floor_color, data);
+	// print_rectangle(130, 130, 80, 80, data->map.color, data);
 	// make_char_array(data);
 	make_int_array(data);
-	setting_raycasting(data);
+	x = data->ray.posX;
+	y = data->ray.posY;
 	valid_map_check(x, y, data);
-	x = 0;
-	y = 0;
+	check_type(data);
+	// printf("%s\n", data->map.map);
 	// printf("hello\n");
-	if (data->map.valid_map == 1 || !ft_strchr(data->map.map, '0'))
+	// printf("%d\n%s\n", data->map.valid_map, data->map.map);
+	if (data->map.valid_map == 1)
 		exit_program_please(data, "Not a valid map!!\n");
 	x = 0;
 	y = 0;
-	change_map_back(x, y, data);
-	// // printf("%d  ||  %d\n", data->xw, data->yw);
-	// while(x < data->xw)
-	// {
-	// 	while (y < data->yw)
-	// 	{
-	// 		printf("%d", data->map.array_map_int[x][y]);
-	// 		y++;
-	// 	}
-	// 	x++;
-	// 	y = 0;
-	// 	printf("\n");
-	// }
+	change_map_back(data->ray.posX, data->ray.posY, data);
+	x = 0;
+	y = 0;
+	// printf("%d  ||  %d\n", data->map_width, data->map_height);
+	// printf("%s\n", data->map.map);
+	while(x < data->map_width)
+	{
+		while (y < data->map_height)
+		{
+			printf("|%d|", data->map.array_map_int[x][y]);
+			y++;
+		}
+		x++;
+		y = 0;
+		printf("\n");
+	}
 }

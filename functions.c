@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   print_textures.c                                   :+:    :+:            */
+/*   functions.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/04/04 14:27:53 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/30 10:58:34 by liz           ########   odam.nl         */
+/*   Created: 2020/05/02 11:15:36 by liz           #+#    #+#                 */
+/*   Updated: 2020/05/04 11:10:15 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d.h"
 
-void	print_textures(t_data *data)
+double	ft_abs(double i)
 {
-	int x = 0;
-	int y = 0;
-	while (y <= data->height)
-	{
-		while (x <= data->width)
-		{
-			mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->map.NO_texture, x, y);
-			x = x + 64;
-		}
-		x = 0;
-		y = y + 64;
-	}
+	static int j;
+	j++;
+	if (i < 0)
+		i = (i * -1);
+	return (i);
 }

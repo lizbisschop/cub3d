@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/21 17:37:12 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/23 11:51:13 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/04 17:54:40 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@
 #include <math.h>
 
 
+#define screenWidth 640
+#define screenHeight 480
+#define texWidth 64
+#define texHeight 64
+#define mapWidth 24
+#define mapHeight 24
+
 //remove!!!!!
 #include <stdio.h>
-
 
 //KEYS
 #define ESC 65307
@@ -30,10 +36,13 @@
 #define A_KEY 97
 #define S_KEY 115
 #define D_KEY 100
+#define RIGHT 65363
+#define LEFT 65361
 
 
 typedef struct s_error {
-	int check_double;
+	int check_double_R;
+
 
 }				t_error;
 
@@ -52,8 +61,8 @@ typedef struct	s_mlx {
 
 typedef struct 	s_map {
 	char	*map;
-	char 	array_map_char[100][100];
-	int 	array_map_int[100][100];
+	// char 	array_map_char[100][100];
+	int 	**array_map_int;
 	int 	floor_color;
 	void	*NO_texture;
 	void	*SO_texture;
@@ -108,6 +117,8 @@ typedef struct 	s_raycasting {
 	double oldDirY;
 	double oldPlaneX;
 	double oldPlaneY;
+	char 	type;
+  	unsigned int buffer[screenHeight][screenWidth];
 
 }				t_raycasting;
 
@@ -125,14 +136,15 @@ typedef struct s_data {
 	t_raycasting	ray;
 	t_error error;
 	t_move	move;
-	int 	xw;
-	int 	yw;
+	int 	map_width;
+	int 	map_height;
 	int x;
 	int y;
 	int		width;
 	int 	height;
 	int		str_cnt;
 	char *file;
+	void *texture[8];
 }           t_data;
 
 
@@ -148,7 +160,7 @@ int 	print_rectangle(int xw, int yw, int height, int width, unsigned int col, t_
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		hooks(t_data *data);
 int		create_trgb(int t, int r, int g, int b);
-int		save_map_in_array(t_data *data);
+int		save_map_in_array(t_data *data, char **argv);
 void	print_textures(t_data *data);
 void	print_map(t_data *data);
 // int 	wasd(int keycode, t_data *data);
@@ -168,7 +180,7 @@ void	ft_putstr(char *str);
 
 
 //CUB3D FUNCTIONS NEW
-int 	get_all_data(t_data *data);
+int 	get_all_data(t_data *data, char **argv);
 int 	setting_mlx(t_data *data);
 int textures(t_data *data, char *line, char **relative_path);
 int setting_raycasting(t_data *data);
@@ -178,5 +190,8 @@ int 	draw_line(int x, int drawStart, int drawEnd, int color, t_data *data);
 int 	key_input(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
 int		main_loop(t_data *data);
+int 	raycasting_loop(t_data *data);
+double	ft_abs(double i);
+int 	check_type(t_data *data);
 
 #endif

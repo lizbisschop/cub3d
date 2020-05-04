@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/11 11:57:53 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/22 11:08:11 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/01 14:57:06 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 void valid_map_check(int x, int y, t_data *data)
 {
-	if (data->map.array_map_char[y][x] == '1')
+	// printf("%d\n", data->map.array_map_int[y][x]);
+	if (data->map.array_map_int[y][x] == 1)
 		return ;
-	if (data->map.array_map_char[y][x] != '0')
-		return ;
-	if (x < 0 || y < 0 || x > data->xw || y > data->yw)
+	if (data->map.array_map_int[y][x] != 0)
 	{
-		data->map.valid_map = 1;
 		return ;
 	}
-	data->map.array_map_char[y][x] = '?';
+	if (x < 0 || y < 0 || y > data->map_width || x > data->map_height)
+	{
+		data->map.valid_map = 1;
+		printf("%d | %d | %d | %d | %d\n", data->map.array_map_int[y][x], x, y, data->map_width, data->map_height);
+		// exit_program_please(data, "Not a valid map!!\n");
+		return ;
+	}
+	data->map.array_map_int[y][x] = 9;
 	valid_map_check(x + 1, y, data);
 	valid_map_check(x, y + 1, data);
 	valid_map_check(x - 1, y, data);
@@ -32,9 +37,9 @@ void valid_map_check(int x, int y, t_data *data)
 
 void change_map_back(int x, int y, t_data *data)
 {
-	if (data->map.array_map_char[y][x] == '?')
+	if (data->map.array_map_int[y][x] == 9)
 	{
-		data->map.array_map_char[y][x] = '0';
+		data->map.array_map_int[y][x] = 0;
 		change_map_back(x + 1, y, data);
 		change_map_back(x, y + 1, data);
 		change_map_back(x - 1, y, data);
