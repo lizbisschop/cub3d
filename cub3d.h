@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/21 17:37:12 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/04 17:54:40 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/12 13:48:21 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 #define A_KEY 97
 #define S_KEY 115
 #define D_KEY 100
-#define RIGHT 65363
-#define LEFT 65361
+#define ROTATE_RIGHT 65363
+#define ROTATE_LEFT 65361
 
 
 typedef struct s_error {
@@ -81,6 +81,33 @@ typedef struct 	s_color {
 	int 	b;
 }				t_color;
 
+typedef struct  s_tex {
+	double 	wallX;
+	int 	texX;
+	double 	step;
+	double 	texPos;
+	int 	texY;
+	int 	x;
+	int 	y;
+	int 	xocolor;
+	int 	texNum;
+	int 	xycolor;
+}               t_tex;
+
+typedef struct s_textures {
+  	unsigned int buffer[screenHeight][screenWidth];
+	void  *tex;
+	int *texture_adrr;
+
+	int     line_length;
+	int     bits_per_pixel;
+	int 	tex_width;
+	int 	tex_height;
+	int     endian;
+	
+
+} 				t_textures;
+
 typedef struct 	s_raycasting {
 	double posX;
 	double posY;
@@ -118,7 +145,6 @@ typedef struct 	s_raycasting {
 	double oldPlaneX;
 	double oldPlaneY;
 	char 	type;
-  	unsigned int buffer[screenHeight][screenWidth];
 
 }				t_raycasting;
 
@@ -136,6 +162,8 @@ typedef struct s_data {
 	t_raycasting	ray;
 	t_error error;
 	t_move	move;
+	t_textures textures[5];
+	t_tex tex;
 	int 	map_width;
 	int 	map_height;
 	int x;
@@ -144,7 +172,6 @@ typedef struct s_data {
 	int 	height;
 	int		str_cnt;
 	char *file;
-	void *texture[8];
 }           t_data;
 
 
@@ -159,7 +186,7 @@ int		print_circle(int x, int y, int r, t_data *data);
 int 	print_rectangle(int xw, int yw, int height, int width, unsigned int col, t_data *data);
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		hooks(t_data *data);
-int		create_trgb(int t, int r, int g, int b);
+int		create_trgb(int r, int g, int b);
 int		save_map_in_array(t_data *data, char **argv);
 void	print_textures(t_data *data);
 void	print_map(t_data *data);
@@ -193,5 +220,8 @@ int		main_loop(t_data *data);
 int 	raycasting_loop(t_data *data);
 double	ft_abs(double i);
 int 	check_type(t_data *data);
+int 	textures_make(t_data *data);
+int 	draw_buffer(unsigned int **buffer, int x, int y, t_data *data);
+
 
 #endif

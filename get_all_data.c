@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 11:46:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/04 11:29:01 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/12 13:48:14 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int 	check_type(t_data *data)
 	{
 		data->ray.dirY = 1.0;
 		data->ray.dirX = 0.0;
-		data->ray.planeX = -0.66;
+		data->ray.planeX = 0.66;
 		data->ray.planeY = 0.0;
 	}
 	else if (data->ray.type == 'W')
 	{
 		data->ray.dirY = -1;
 		data->ray.dirX = 0.0;
-		data->ray.planeX = 0.66;
+		data->ray.planeX = -0.66;
 		data->ray.planeY = 0.0;
 	}
 	else if (data->ray.type == 'N')
@@ -33,14 +33,14 @@ int 	check_type(t_data *data)
 		data->ray.dirY = 0.0;
 		data->ray.dirX = -1;
 		data->ray.planeX = 0.0;
-		data->ray.planeY = -0.66;
+		data->ray.planeY = 0.66;
 	}
 	else if (data->ray.type == 'S')
 	{
 		data->ray.dirY = 0.0;
 		data->ray.dirX = 1.0;
 		data->ray.planeX = 0.0;
-		data->ray.planeY = 0.66;
+		data->ray.planeY = -0.66;
 	}
 }
 
@@ -50,6 +50,8 @@ int 	setting_mlx(t_data *data)
 	data->mlx.mlx_win = mlx_new_window(data->mlx.mlx, 1010, 700, "CUB3D");
 	data->mlx.img = mlx_new_image(data->mlx.mlx, 1010, 700);
 	data->mlx.addr = mlx_get_data_addr(data->mlx.img, &data->mlx.bits_per_pixel, &data->mlx.line_length, &data->mlx.endian);
+	int i = 0;
+	
 }
 
 int setting_raycasting(t_data *data)
@@ -85,24 +87,24 @@ int 	get_all_data(t_data *data, char **argv)
 	// printf("%s\n", data->map.map);
 	// printf("hello\n");
 	// printf("%d\n%s\n", data->map.valid_map, data->map.map);
+	x = 0;
+	y = 0;
+	// printf("%d  ||  %d\n", data->map_width, data->map_height);
+	// printf("%s\n", data->map.map);
+	// while(x < data->map_width)
+	// {
+	// 	while (y < data->map_height)
+	// 	{
+	// 		printf("|%d|", data->map.array_map_int[x][y]);
+	// 		y++;
+	// 	}
+	// 	x++;
+	// 	y = 0;
+	// 	printf("\n");
+	// }
 	if (data->map.valid_map == 1)
 		exit_program_please(data, "Not a valid map!!\n");
 	x = 0;
 	y = 0;
 	change_map_back(data->ray.posX, data->ray.posY, data);
-	x = 0;
-	y = 0;
-	// printf("%d  ||  %d\n", data->map_width, data->map_height);
-	// printf("%s\n", data->map.map);
-	while(x < data->map_width)
-	{
-		while (y < data->map_height)
-		{
-			printf("|%d|", data->map.array_map_int[x][y]);
-			y++;
-		}
-		x++;
-		y = 0;
-		printf("\n");
-	}
 }

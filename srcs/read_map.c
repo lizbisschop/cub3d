@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 11:36:25 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/04 11:08:29 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/12 13:48:10 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,20 @@ int	make_int_array(t_data *data)
 		data->map.array_map_int[i] = ft_calloc(data->map_width + 1, sizeof(int));
 		i++;
 	}
-			int x = 0;
-		int y = 0;
-		while(x < data->map_width)
-	{
-		while (y < data->map_height)
-		{
-			printf("|%d|", data->map.array_map_int[x][y]);
-			y++;
-		}
-		x++;
-		y = 0;
-		printf("\n");
-	}
-	printf("\n\n");
+	// 		int x = 0;
+	// 	int y = 0;
+	// 	while(x < data->map_width)
+	// {
+	// 	while (y < data->map_height)
+	// 	{
+	// 		printf("|%d|", data->map.array_map_int[x][y]);
+	// 		y++;
+	// 	}
+	// 	x++;
+	// 	y = 0;
+	// 	printf("\n");
+	// }
+	// printf("\n\n");
 
 	i = 0;
 	while (data->map.map[i] != '\0')
@@ -92,7 +92,6 @@ int	make_int_array(t_data *data)
 		}
 		i++;
 	}
-	// data->map.map_height = total_chars;
 	// printf("%d\n", data->map.map_width);
 	// printf("%d\n", data->map.map_height);
 }
@@ -171,7 +170,7 @@ int textures(t_data *data, char *line, char **relative_path)
 				i++;
 			*relative_path = gnl_strdup(&line[i]);
 			// printf("%s\n", *relative_path);
-			data->map.NO_texture = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->mlx.img_width, &data->mlx.img_height);
+			data->textures[0].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[0].tex_width, &data->textures[0].tex_height);
 			return (1);
 		}
 		else if (ft_strchr(line, 'S') && ft_strchr(line, 'O') && check_SO < 2)
@@ -179,7 +178,7 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == ' ' || line[i] == 'S' || line[i] == 'O')
 				i++;
 			*relative_path = gnl_strdup(&line[i]);
-			data->map.SO_texture = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->mlx.img_width, &data->mlx.img_height);
+			data->textures[1].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[1].tex_width, &data->textures[1].tex_height);
 			return (1);
 		}
 		else if (ft_strchr(line, 'W') && ft_strchr(line, 'E') && check_WE < 2)
@@ -187,7 +186,7 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == ' ' || line[i] == 'W' || line[i] == 'E')
 				i++;
 			*relative_path = gnl_strdup(&line[i]);
-			data->map.WE_texture = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->mlx.img_width, &data->mlx.img_height);
+			data->textures[2].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[2].tex_width, &data->textures[2].tex_height);
 			return (1);
 		}
 		else if (ft_strchr(line, 'E') && ft_strchr(line, 'A') && check_EA < 2)
@@ -195,7 +194,7 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == ' ' || line[i] == 'E' || line[i] == 'A')
 				i++;
 			*relative_path = gnl_strdup(&line[i]);
-			data->map.EA_texture = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->mlx.img_width, &data->mlx.img_height);
+			data->textures[3].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[3].tex_width, &data->textures[3].tex_height);
 			return (1);
 		}
 		if (check_NO > 1 || check_SO > 1 || check_EA > 1 || check_WE > 1)
@@ -252,7 +251,7 @@ int color(t_data *data, char *line)
 				}
 				
 			}
-			data->map.floor_color = create_trgb(1, data->color.r, data->color.g, data->color.b);
+			data->map.floor_color = create_trgb(data->color.r, data->color.g, data->color.b);
 			// print_rectangle(0, 100, 80, 80, data->floor_color, data);
 			return (1);
 		}
@@ -286,7 +285,7 @@ int color(t_data *data, char *line)
 						i++;
 				}
 			}
-			data->map.color = create_trgb(1, data->color.r, data->color.g, data->color.b);
+			data->map.color = create_trgb(data->color.r, data->color.g, data->color.b);
 			// print_rectangle(150, 600, 80, 80, data->color, data);
 			return (1);
 		}

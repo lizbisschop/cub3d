@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 11:58:07 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/04 14:16:08 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/10 14:02:39 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ int 	background(t_data *data, int col)
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.img, 0, 0);
 	return (0);
 }
+
+// int 	draw_buffer(unsigned int **buffer, int x, int y, t_data *data)
+// {
+// 	// printf("%d | %d\n", x, y);
+// 	while ( )
+
+// }
 
 int 	draw_line(int x, int drawStart, int drawEnd, int color, t_data *data)
 {

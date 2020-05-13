@@ -6,15 +6,15 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/01 19:36:51 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/22 11:07:32 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/12 13:47:53 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int		create_trgb(int t, int r, int g, int b)
+int		create_trgb(int r, int g, int b)
 {
-	return(b << 24 | g << 16 | r << 8 | t);
+	return(b << 24 | g << 16 | r << 8);
 }
 
 

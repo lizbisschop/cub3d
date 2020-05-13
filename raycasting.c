@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/14 11:22:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/04 17:40:47 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/11 14:37:16 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int 	what_to_draw(t_data *data)
 {
+	printf("hello\n");
 	if (data->ray.side == 0)
 			data->ray.perpWallDist = (data->ray.mapX - data->ray.posX + (1 - data->ray.stepX) / 2) / data->ray.rayDirX;
 		else
@@ -30,45 +31,30 @@ int 	what_to_draw(t_data *data)
 			data->ray.drawEnd = data->height - 1;
 		
 		// printf("%d|  %d|  %d| %d|\n", data->ray.x_ray, data->map.array_map_int[data->ray.mapX][data->ray.mapY], data->ray.drawStart, data->ray.drawEnd);
-		
-		// red
-		if (data->map.array_map_int[data->ray.mapX][data->ray.mapY] == 1)
-			data->ray.color_ray = create_trgb(1, 123,234,123);
-		if (data->map.array_map_int[data->ray.mapX][data->ray.mapY] == 2)
-			data->ray.color_ray = create_trgb(1, 225, 123, 225);
-		if (data->ray.side == 1)
-		{
-			data->ray.color_ray = data->ray.color_ray / 2;	
-		}
-		// ////TEXTURES TRY
-		// int texNum = data->map.array_map_int[data->ray.mapX][data->ray.mapY] - 1;
-
-		// double wallX;
-		// if (data->ray.side == 0)
-		// 	wallX = data->ray.posY + data->ray.perpWallDist * data->ray.rayDirY;
-		// else
-		// 	wallX = data->ray.posX + data->ray.perpWallDist * data->ray.raDirX;
-
-		// int texX = int(walX * double(texWidth));
-
-		// if (data->ray.side == 0 && data->ray.rayDirX > 0)
-		// 	texX = texwidth - texX -1;
-		// if (data->ray.side == 1 && data->ray.rayDirY < 0)
-		// 	texX = texwidth - texX -1;
-
-		// double step = 1.0 * texheight / data->ray.lineheight;
-		// double texPos = (drawStart - data->height / 2 + data->ray.lineHeight) * step;
-
-		// int y;
-		// y = data->ray.drawStart;
-		// while (y < data->ray.drawEnd)
+		int r, g, b, rv,gv,bv;
+		r = 255;
+		g = 0;
+		b = 0;
+		rv = 0;
+		gv = 255;
+		bv = 225;
+		// if (data->map.array_map_int[data->ray.mapX][data->ray.mapY] == 1)
+		// 	data->ray.color_ray = create_trgb(1, r,g,b);
+		// if (data->map.array_map_int[data->ray.mapX][data->ray.mapY] == 2)
+		// 	data->ray.color_ray = create_trgb(1, rv, gv, bv);
+		// if (data->ray.side == 1 && data->map.array_map_int[data->ray.mapX][data->ray.mapY] == 1)
 		// {
-		// 	int texY = (int)texPos & (texheight - 1);
-		// 	texPos += step;
-		// 	Uint32 color = data->texture[texNum][texHeight * texY + texX];
+		// 	data->ray.color_ray = create_trgb(1, r/1.2, g/1.2, b/1.2);	
 		// }
+		// else if (data->ray.side == 1 && data->map.array_map_int[data->ray.mapX][data->ray.mapY] == 2)
+		// {
+		// 	data->ray.color_ray = create_trgb(1, rv/1.2, gv/1.2, bv/1.2);
+		// }
+		// ////TEXTURES TRY
+		textures_make(data);
+		// background(data, 0xFFFFFFFF);
 		//////END OF TRY
-		draw_line(data->ray.x_ray, data->ray.drawStart, data->ray.drawEnd, data->ray.color_ray, data);
+		// draw_line(data->ray.x_ray, data->ray.drawStart, data->ray.drawEnd, data->ray.color_ray, data);
 		data->ray.x_ray++;
 }
 
