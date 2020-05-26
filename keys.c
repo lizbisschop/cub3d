@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/23 11:45:37 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/07 11:28:29 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/25 17:12:34 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		key_release(int keycode, t_data *data)
 
 int 	key_input(int keycode, t_data *data)
 {
+	printf("%d\n", keycode);
 	data->move.x = 1;
 	if(keycode == ESC)
 	{
@@ -28,74 +29,73 @@ int 	key_input(int keycode, t_data *data)
 	//w
 	if (keycode == W_KEY)
 	{
-		// printf("%lf | %lf\n", data->ray.posX, data->ray.posY);
-		if (data->map.array_map_int[(int)(data->ray.posX + data->ray.dirX * data->ray.moveSpeed)][(int)(data->ray.posY)] == 0)
-			data->ray.posX += data->ray.dirX * data->ray.moveSpeed;
-		if (data->map.array_map_int[(int)(data->ray.posX)][(int)(data->ray.posY + data->ray.dirY * data->ray.moveSpeed)] == 0)
-			data->ray.posY += data->ray.dirY * data->ray.moveSpeed;
-		// data->ray.posY = 13;
-		printf("%lf | %lf\n", data->ray.posX, data->ray.posY);
-		printf("%d | %d\n", data->map.array_map_int[(int)(data->ray.posY)][(int)(data->ray.posX + data->ray.dirX * data->ray.moveSpeed)], data->map.array_map_int[(int)(data->ray.posY + data->ray.dirY * data->ray.moveSpeed)][(int)(data->ray.posX)]);
+		// printf("%lf | %lf\n", data->ray.pos_x, data->ray.pos_y);
+		if (data->map.array_map_int[(int)(data->ray.pos_y)][(int)(data->ray.pos_x + data->ray.dir_x * data->ray.move_speed)] != 1)
+			data->ray.pos_x += data->ray.dir_x * data->ray.move_speed;
+		if (data->map.array_map_int[(int)(data->ray.pos_y + data->ray.dir_y * data->ray.move_speed)][(int)(data->ray.pos_x)] != 1)
+			data->ray.pos_y += data->ray.dir_y * data->ray.move_speed;
+		// data->ray.pos_y = 13;
+		printf("%lf | %lf\n", data->ray.pos_x, data->ray.pos_y);
 	}
 	//S
 	if (keycode == S_KEY)
 	{
-		if(data->map.array_map_int[(int)(data->ray.posX - data->ray.dirX * data->ray.moveSpeed)][(int)(data->ray.posY)] == 0)
-			data->ray.posX -= data->ray.dirX * data->ray.moveSpeed;
-      	if(data->map.array_map_int[(int)(data->ray.posX)][(int)(data->ray.posY - data->ray.dirY * data->ray.moveSpeed)] == 0)
-	  		data->ray.posY -= data->ray.dirY * data->ray.moveSpeed;
-		printf("%lf | %lf\n", data->ray.posX, data->ray.posY);
-				printf("%d | %d\n", data->map.array_map_int[(int)(data->ray.posY)][(int)(data->ray.posX - data->ray.dirX * data->ray.moveSpeed)], data->map.array_map_int[(int)(data->ray.posY - data->ray.dirY * data->ray.moveSpeed)][(int)(data->ray.posX)]);
+		if(data->map.array_map_int[(int)(data->ray.pos_y)][(int)(data->ray.pos_x - data->ray.dir_x * data->ray.move_speed)] != 1)
+			data->ray.pos_x -= data->ray.dir_x * data->ray.move_speed;
+      	if(data->map.array_map_int[(int)(data->ray.pos_y - data->ray.dir_y * data->ray.move_speed)][(int)(data->ray.pos_x)] != 1)
+	  		data->ray.pos_y -= data->ray.dir_y * data->ray.move_speed;
+		printf("pos x = %lf | pos y = %lf\n", data->ray.pos_x, data->ray.pos_y);
 
 	}
     if (keycode == ROTATE_RIGHT)
     {
-	//   printf("%lf | %lf | %lf\n", data->ray.dirX, data->ray.oldDirX, data->ray.rotSpeed);
-      data->ray.oldDirX = data->ray.dirX;
-      data->ray.dirX = data->ray.dirX * cos(-data->ray.rotSpeed) - data->ray.dirY * sin(-data->ray.rotSpeed);
-      data->ray.dirY = data->ray.oldDirX * sin(-data->ray.rotSpeed) + data->ray.dirY * cos(-data->ray.rotSpeed);
-      data->ray.oldPlaneX = data->ray.planeX;
-      data->ray.planeX = data->ray.planeX * cos(-data->ray.rotSpeed) - data->ray.planeY * sin(-data->ray.rotSpeed);
-      data->ray.planeY = data->ray.oldPlaneX * sin(-data->ray.rotSpeed) + data->ray.planeY * cos(-data->ray.rotSpeed);
-	printf("%lf | %lf\n", data->ray.posX, data->ray.posY);
+	//   printf("%lf | %lf | %lf\n", data->ray.dir_x, data->ray.old_dir_x, data->ray.rot_speed);
+      data->ray.old_dir_x = data->ray.dir_x;
+      data->ray.dir_x = data->ray.dir_x * cos(-data->ray.rot_speed) - data->ray.dir_y * sin(-data->ray.rot_speed);
+      data->ray.dir_y = data->ray.old_dir_x * sin(-data->ray.rot_speed) + data->ray.dir_y * cos(-data->ray.rot_speed);
+      data->ray.old_plane_x = data->ray.plane_x;
+      data->ray.plane_x = data->ray.plane_x * cos(-data->ray.rot_speed) - data->ray.plane_y * sin(-data->ray.rot_speed);
+      data->ray.plane_y = data->ray.old_plane_x * sin(-data->ray.rot_speed) + data->ray.plane_y * cos(-data->ray.rot_speed);
+	  printf("pos x = %lf | pos y = %lf\n", data->ray.pos_x, data->ray.pos_y);
+
 	}
     // //rotate to the left
 	 if (keycode == ROTATE_LEFT)
     {
-      data->ray.oldDirX = data->ray.dirX;
-      data->ray.dirX = data->ray.dirX * cos(data->ray.rotSpeed) - data->ray.dirY * sin(data->ray.rotSpeed);
-      data->ray.dirY = data->ray.oldDirX * sin(data->ray.rotSpeed) + data->ray.dirY * cos(data->ray.rotSpeed);
-      data->ray.oldPlaneX = data->ray.planeX;
-      data->ray.planeX = data->ray.planeX * cos(data->ray.rotSpeed) - data->ray.planeY * sin(data->ray.rotSpeed);
-      data->ray.planeY = data->ray.oldPlaneX * sin(data->ray.rotSpeed) + data->ray.planeY * cos(data->ray.rotSpeed);
-	  printf("%lf | %lf\n", data->ray.posX, data->ray.posY);
+      data->ray.old_dir_x = data->ray.dir_x;
+      data->ray.dir_x = data->ray.dir_x * cos(data->ray.rot_speed) - data->ray.dir_y * sin(data->ray.rot_speed);
+      data->ray.dir_y = data->ray.old_dir_x * sin(data->ray.rot_speed) + data->ray.dir_y * cos(data->ray.rot_speed);
+      data->ray.old_plane_x = data->ray.plane_x;
+      data->ray.plane_x = data->ray.plane_x * cos(data->ray.rot_speed) - data->ray.plane_y * sin(data->ray.rot_speed);
+      data->ray.plane_y = data->ray.old_plane_x * sin(data->ray.rot_speed) + data->ray.plane_y * cos(data->ray.rot_speed);
+		printf("pos x = %lf | pos y = %lf\n", data->ray.pos_x, data->ray.pos_y);
       //both camera direction and camera plane must be rotated
 	}
 	if (keycode == A_KEY)
 	{
-		if (data->map.array_map_int[(int)data->ray.posY]
-			[(int)(data->ray.posX - data->ray.planeX
-			* data->ray.moveSpeed)] == 0)
-			data->ray.posX -= data->ray.planeX
-			* data->ray.moveSpeed;
-		if (data->map.array_map_int[(int)(data->ray.posY
-			- data->ray.planeY * data->ray.moveSpeed)]
-			[(int)data->ray.posX] == 0)
-			data->ray.posY -= data->ray.planeY
-			* data->ray.moveSpeed;
+		if (data->map.array_map_int[(int)data->ray.pos_y]
+			[(int)(data->ray.pos_x - data->ray.plane_x
+			* data->ray.move_speed)] == 0)
+			data->ray.pos_x -= data->ray.plane_x
+			* data->ray.move_speed;
+		if (data->map.array_map_int[(int)(data->ray.pos_y
+			- data->ray.plane_y * data->ray.move_speed)]
+			[(int)data->ray.pos_x] == 0)
+			data->ray.pos_y -= data->ray.plane_y
+			* data->ray.move_speed;
 }
 	if (keycode == D_KEY)
 	{	
-		if (data->map.array_map_int[(int)data->ray.posY]
-			[(int)(data->ray.posX + data->ray.planeX
-			* data->ray.moveSpeed)] == 0)
-			data->ray.posX += data->ray.planeX
-			* data->ray.moveSpeed;
-		if (data->map.array_map_int[(int)(data->ray.posY
-			+ data->ray.planeY * data->ray.moveSpeed)]
-			[(int)data->ray.posX] == 0)
-			data->ray.posY += data->ray.planeY
-			* data->ray.moveSpeed;
+		if (data->map.array_map_int[(int)data->ray.pos_y]
+			[(int)(data->ray.pos_x + data->ray.plane_x
+			* data->ray.move_speed)] == 0)
+			data->ray.pos_x += data->ray.plane_x
+			* data->ray.move_speed;
+		if (data->map.array_map_int[(int)(data->ray.pos_y
+			+ data->ray.plane_y * data->ray.move_speed)]
+			[(int)data->ray.pos_x] == 0)
+			data->ray.pos_y += data->ray.plane_y
+			* data->ray.move_speed;
 	}
 	raycasting(data);
 }

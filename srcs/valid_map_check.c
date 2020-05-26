@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/11 11:57:53 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/01 14:57:06 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/21 13:31:05 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void valid_map_check(int x, int y, t_data *data)
 	{
 		return ;
 	}
-	if (x < 0 || y < 0 || y > data->map_width || x > data->map_height)
+	if (x < 0 || y < 0 || y > data->map_height || x > data->map_width)
 	{
 		data->map.valid_map = 1;
-		printf("%d | %d | %d | %d | %d\n", data->map.array_map_int[y][x], x, y, data->map_width, data->map_height);
+		printf("int = %d | x =  %d | y = %d | width = %d | height = %d\n", data->map.array_map_int[y][x], x, y, data->map_width, data->map_height);
 		// exit_program_please(data, "Not a valid map!!\n");
 		return ;
 	}

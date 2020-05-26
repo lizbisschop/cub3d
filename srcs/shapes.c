@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/01 19:36:51 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/12 13:47:53 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/14 15:17:54 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,23 @@ int		create_trgb(int r, int g, int b)
 	return(b << 24 | g << 16 | r << 8);
 }
 
+unsigned int    add_shade(double distance, unsigned int color)
+{
+    unsigned int r;
+    unsigned int g;
+    unsigned int b;
+    unsigned int t;
+    t = color & 0xFF000000;
+    r = color & 0xFF0000;
+    g = color & 0xFF00;
+    b = color & 0xFF;
+    r = (r >> 16) * (1 - distance);
+    g = (g >> 8) * (1 - distance);
+    b = b * (1 - distance);
+    r = r << 16;
+    g = g << 8;
+    return (t | r | g | b);
+}
 
 int 	print_rectangle(int xw, int yw, int height, int width, unsigned int col, t_data *data)
 {

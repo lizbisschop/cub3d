@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/04 14:27:53 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/30 10:58:34 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/26 10:42:50 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_textures(t_data *data)
 	{
 		while (x <= data->width)
 		{
-			mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->map.NO_texture, x, y);
+			mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->map.no_texture, x, y);
 			x = x + 64;
 		}
 		x = 0;

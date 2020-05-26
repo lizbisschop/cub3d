@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/21 17:37:12 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/12 13:48:21 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/26 11:55:23 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@
 #define ROTATE_RIGHT 65363
 #define ROTATE_LEFT 65361
 
+//SPRITES??
+#define num_sprites 12
+
+
+
+
+typedef struct s_sprite {
+	double 	x;
+	double 	y;
+	int 	texture;
+
+}				t_sprite;
 
 typedef struct s_error {
 	int check_double_R;
@@ -64,15 +76,16 @@ typedef struct 	s_map {
 	// char 	array_map_char[100][100];
 	int 	**array_map_int;
 	int 	floor_color;
-	void	*NO_texture;
-	void	*SO_texture;
-	void	*EA_texture;
-	void	*WE_texture;
-	void	*sprite;
+	char	*no_path;
+	char	*so_path;
+	char	*ea_path;
+	char	*we_path;
+	char *sprite;
 	int valid_map;
 	int 	color;
 
 }				t_map;
+
 
 typedef struct 	s_color {
 
@@ -82,15 +95,15 @@ typedef struct 	s_color {
 }				t_color;
 
 typedef struct  s_tex {
-	double 	wallX;
-	int 	texX;
+	double 	wall_x;
+	int 	tex_x;
+	int 	tex_y;
 	double 	step;
-	double 	texPos;
-	int 	texY;
+	double 	tex_pos;
 	int 	x;
 	int 	y;
 	int 	xocolor;
-	int 	texNum;
+	int 	tex_num;
 	int 	xycolor;
 }               t_tex;
 
@@ -109,41 +122,39 @@ typedef struct s_textures {
 } 				t_textures;
 
 typedef struct 	s_raycasting {
-	double posX;
-	double posY;
+	double pos_x;
+	double pos_y;
 	double add;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
-	double time;
-	double oldTime;
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
+	double camera_x;
+	double ray_dir_x;
+	double ray_dir_y;
 	int x_ray;
-	int 	mapX;
-	int 	mapY;
-	double sideDistX;
-	double sideDistY;
-	int stepX;
-	int stepY;
+	int 	map_x;
+	int 	map_y;
+	double side_dist_x;
+	double side_dist_y;
+	int step_x;
+	int step_y;
 	int hit;
 	int side;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int lineHeight;
-	int drawStart;
-	int drawEnd;
-	double frameTime;
-	double moveSpeed;
-	double rotSpeed;
+	double delta_dist_x;
+	double delta_dist_y;
+	double perp_wall_dist;
+	int line_height;
+	int draw_start;
+	int draw_end;
+	double frame_time;
+	double move_speed;
+	double rot_speed;
 	int color_ray;
-	double oldDirX;
-	double oldDirY;
-	double oldPlaneX;
-	double oldPlaneY;
+	double old_dir_x;
+	double old_dir_y;
+	double old_plane_x;
+	double old_plane_y;
 	char 	type;
 
 }				t_raycasting;
@@ -164,6 +175,7 @@ typedef struct s_data {
 	t_move	move;
 	t_textures textures[5];
 	t_tex tex;
+	t_sprite sprite[num_sprites];
 	int 	map_width;
 	int 	map_height;
 	int x;
@@ -172,6 +184,22 @@ typedef struct s_data {
 	int 	height;
 	int		str_cnt;
 	char *file;
+	unsigned int **buffer;
+	double 		*zbuffer;
+	int 		sprite_order[num_sprites];
+	double 		sprite_distance[num_sprites];
+	double 		sprite_x;
+	double 		sprite_y;
+	double 		inv_det;
+	double 		transform_x;
+	double 		transform_y;
+	int 		sprite_screen_x;
+	int 		sprite_height;
+	int 		sprite_width;
+	int 		draw_start_y;
+	int 		draw_end_y;
+	int 		draw_start_x;
+	int 		draw_end_x;
 }           t_data;
 
 
@@ -204,6 +232,7 @@ void change_map_back(int x, int y, t_data *data);
 int	ft_atoi(const char *str);
 char	*ft_strdup(const char *s1);
 void	ft_putstr(char *str);
+int 	cubed_strchr(char *str, char c);
 
 
 //CUB3D FUNCTIONS NEW
@@ -222,6 +251,10 @@ double	ft_abs(double i);
 int 	check_type(t_data *data);
 int 	textures_make(t_data *data);
 int 	draw_buffer(unsigned int **buffer, int x, int y, t_data *data);
-
+unsigned int    add_shade(double distance, unsigned int color);
+int which_texture(t_data *data);
+void sort_sprites(int* order, double* dist, int amount);
+int 	sprites(t_data *data);
+int is_sprite_visible(t_data *data, int color, int i);
 
 #endif

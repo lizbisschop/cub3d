@@ -6,54 +6,101 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/05 10:39:35 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/12 11:30:13 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/21 10:50:16 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int which_texture(t_data *data)
+{
+	int no;
+	int so;
+	int we;
+	int ea;
+
+	no = 0;
+	so = 1;
+	we = 2;
+	ea = 3;
+	if (data->ray.map_x <= data->ray.pos_x)
+	{
+		if (data->ray.side == 0)
+			data->tex.tex_num = 0;
+		if (data->ray.pos_y < data->ray.map_y && data->ray.side == 1)
+			data->tex.tex_num = ea;
+		else if (data->ray.pos_y > data->ray.map_y && data->ray.side == 1)
+			data->tex.tex_num = we;
+	}
+	else if (data->ray.map_x > data->ray.pos_x)
+	{
+		if (data->ray.side == 0)
+			data->tex.tex_num = so;
+		if (data->ray.pos_y < data->ray.map_y && data->ray.side == 1)
+			data->tex.tex_num = ea;
+		else if (data->ray.pos_y > data->ray.map_y && data->ray.side == 1)
+			data->tex.tex_num = we;
+	}
+		// printf("tex_num == %d\n\n", data->tex.tex_num);
+
+}
 int 	textures_make(t_data *data)
 {
-	data->tex.texNum = data->map.array_map_int[data->ray.mapX][data->ray.mapY] - 1;
+	// if (data->ray.map_y < data->ray.pos_y && data->ray.map_x < data->ray.pos_x)
+	// 	data->tex.tex_num = 0;
+	// else if (data->ray.map_y > data->ray.pos_y && data->ray.map_x > data->ray.pos_x)
+	// 	data->tex.tex_num = 1;
+	// else if (data->ray.map_x < data->ray.pos_x && data->ray.map_y < data->ray.pos_x)
+	// 	data->tex.tex_num = 2;
+	// else if (data->ray.map_x > data->ray.pos_x && data->ray.map_y > data->ray.pos_y)
+	// 	data->tex.tex_num = 3;
+	// if ()
+	// data->tex.tex_num = data->map.array_map_int[data->ray.map_x][data->ray.map_y] - 1;
+	// printf("x = %d | mapX = %d | mapY = %d || posX = %f | posY = %f | stepX = %d | stepY = %d\n", data->ray.x_ray, data->ray.map_x, data->ray.map_y, data->ray.pos_x, data->ray.pos_y, data->ray.step_x, data->ray.step_y);
 
 		if (data->ray.side == 0)
-			data->tex.wallX = data->ray.posY + data->ray.perpWallDist * data->ray.rayDirY;
+			data->tex.wall_x = data->ray.pos_y + data->ray.perp_wall_dist * data->ray.ray_dir_y;
 		else
-			data->tex.wallX = data->ray.posX + data->ray.perpWallDist * data->ray.rayDirX;
-		data->tex.wallX -= floor((data->tex.wallX));
+			data->tex.wall_x = data->ray.pos_x + data->ray.perp_wall_dist * data->ray.ray_dir_x;
+		data->tex.wall_x -= floor((data->tex.wall_x));
 
 		//x coordinate on the texture
-		data->tex.texX = (int)(data->tex.wallX * (double)(texWidth));
+		data->tex.tex_x = (int)(data->tex.wall_x * (double)(data->textures[data->tex.tex_num].tex_width));
 
-		if (data->ray.side == 0 && data->ray.rayDirX > 0)
-			data->tex.texX = texWidth - data->tex.texX -1;
-		if (data->ray.side == 1 && data->ray.rayDirY < 0)
-			data->tex.texX = texWidth - data->tex.texX -1;
+		if (data->ray.side == 0 && data->ray.ray_dir_x > 0)
+			data->tex.tex_x = data->textures[data->tex.tex_num].tex_width - data->tex.tex_x -1;
+		if (data->ray.side == 1 && data->ray.ray_dir_y < 0)
+			data->tex.tex_x = data->textures[data->tex.tex_num].tex_width - data->tex.tex_x -1;
 
 		//how much to increase the texture coordinate per screen pixel
-		data->tex.step = 1.0 * texHeight / data->ray.lineHeight;
-		data->tex.texPos = (data->ray.drawStart - data->height / 2 + data->ray.lineHeight) * data->tex.step;
+		data->tex.step = 1.0 * data->textures[data->tex.tex_num].tex_height / data->ray.line_height;
+		data->tex.tex_pos = (data->ray.draw_start - data->height / 2 + data->ray.line_height / 2) * data->tex.step;
 
 		int y;
 		int i = 0;
-		y = data->ray.drawStart;
-		while (i < data->ray.drawStart)
+		y = data->ray.draw_start;
+		while (i < data->ray.draw_start)
 		{
 			my_mlx_pixel_put(data, data->ray.x_ray, i,data->map.color);
 			i++;
 		}
-		while (y < data->ray.drawEnd)
+		// data->tex.tex_pos = 0;
+		while (y < data->ray.draw_end)
 		{
-			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-			data->tex.texY = (int)data->tex.texPos & (texHeight - 1);
-			data->tex.texPos += data->tex.step;
-			unsigned int color = (data->textures[data->tex.texNum].texture_adrr[texHeight * data->tex.texY + data->tex.texX]);
+			// Cast the texture coordinate to integer, and mask with (data->textures[data->tex.tex_num].tex_height - 1) in case of overflow
+			data->tex.tex_y = (int)data->tex.tex_pos & (data->textures[data->tex.tex_num].tex_height - 1);
+			data->tex.tex_pos += data->tex.step;
+								// printf("%d | %d || %f | %f\n", data->ray.map_x, data->ray.map_y, data->ray.pos_x, data->ray.pos_y);
+
+			int color = (data->textures[data->tex.tex_num].texture_adrr[data->textures[data->tex.tex_num].tex_height * data->tex.tex_y + data->tex.tex_x]);
 			if (data->ray.side == 1)
-				color = color/2;
-			// draw_line(data->ray.x_ray, data->ray.drawStart, data->ray.drawEnd, (int)color, data);
+			{
+				color = add_shade(0.4, color);
+			}
 			my_mlx_pixel_put(data, data->ray.x_ray, y, color);
 			y++;
 		}
+			// printf("%f | %f |%d | %d | %d | %d\n", data->tex.step, data->tex.tex_pos, y, data->tex.tex_y, data->tex.texX, data->ray.x_ray);
 		while (y < data->height)
 		{
 			my_mlx_pixel_put(data, data->ray.x_ray, y, data->map.floor_color);

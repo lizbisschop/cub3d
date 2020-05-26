@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 13:56:47 by liz           #+#    #+#                 */
-/*   Updated: 2020/04/24 10:52:53 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/22 10:53:55 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_isalpha(int c)
 	else
 		return (0);
 }
+
 
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)

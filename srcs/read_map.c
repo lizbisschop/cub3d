@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 11:36:25 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/12 13:48:10 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/26 11:40:00 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,50 +18,38 @@ int	make_int_array(t_data *data)
 	int array;
 	int chars;
 	int total_chars;
-	data->map_width = 0;
+	int sprites;
 	data->map_height = 0;
+	data->map_width = 0;
 
 	i = 0;
 	array = 0;
 	chars = 0;
+	sprites = 0;
 	total_chars = 0;
 	while (data->map.map[i] != '\0')
 	{
 		if (data->map.map[i] == '\n')
 		{
-			data->map_width++;
-			if (data->map_height > total_chars)
-				total_chars = (data->map_height - 1);
-			data->map_height = 0;
+			data->map_height++;
+			if (data->map_width > total_chars)
+				total_chars = (data->map_width - 1);
+			data->map_width = 0;
 		}
 		if (data->map.map[i] == ' ')
 			i++;
 		i++;
-		data->map_height++;
+		data->map_width++;
 	}
-	data->map_height = total_chars;
-	// printf("%d | %d\n", data->map_width, data->map_height);
+	data->map_width = total_chars;
+	// printf("%d | %d\n", data->map_height, data->map_width);
 	data->map.array_map_int = malloc(sizeof(int*) * data->map_height + 1);
 	i = 0;
-	while (i < data->map_height)
+	while (i < data->map_width)
 	{
 		data->map.array_map_int[i] = ft_calloc(data->map_width + 1, sizeof(int));
 		i++;
 	}
-	// 		int x = 0;
-	// 	int y = 0;
-	// 	while(x < data->map_width)
-	// {
-	// 	while (y < data->map_height)
-	// 	{
-	// 		printf("|%d|", data->map.array_map_int[x][y]);
-	// 		y++;
-	// 	}
-	// 	x++;
-	// 	y = 0;
-	// 	printf("\n");
-	// }
-	// printf("\n\n");
 
 	i = 0;
 	while (data->map.map[i] != '\0')
@@ -74,8 +62,10 @@ int	make_int_array(t_data *data)
 		if (data->map.map[i] == 'N' || data->map.map[i] == 'S' || data->map.map[i] == 'W' || data->map.map[i] == 'E')
 		{
 			data->ray.type = data->map.map[i];
-			data->ray.posX = chars;
-			data->ray.posY = array;
+			data->ray.pos_x = chars;
+			data->ray.pos_y = array;
+			data->ray.pos_x += 0.5;
+			data->ray.pos_y += 0.5;
 			data->map.array_map_int[array][chars] = 0;
 			chars++;
 		}
@@ -83,6 +73,16 @@ int	make_int_array(t_data *data)
 		{
 			data->map.array_map_int[array][chars] = 0;
 			chars++;
+		}
+		if (data->map.map[i] == '2')
+		{
+			data->sprite[sprites].x = (double)chars;
+			data->sprite[sprites].y = (double)array;
+			data->sprite[sprites].texture = 2;
+			data->map.array_map_int[array][chars] = data->map.map[i] - 48;
+			printf("x = %f | y = %f\n", data->sprite[sprites].x, data->sprite[sprites].y);
+			chars++;
+			sprites++;
 		}
 		else if (data->map.map[i] >= '0' && data->map.map[i] <= '9')
 		{
@@ -92,8 +92,22 @@ int	make_int_array(t_data *data)
 		}
 		i++;
 	}
-	// printf("%d\n", data->map.map_width);
-	// printf("%d\n", data->map.map_height);
+	//  int x = 0;
+	// 	int y = 0;
+	// 	while(x < data->map_height)
+	// {
+	// 	while (y < data->map_width)
+	// 	{
+	// 		printf("|%d|", data->map.array_map_int[x][y]);
+	// 		y++;
+	// 	}
+	// 	x++;
+	// 	y = 0;
+	// 	printf("\n");
+	// }
+	// printf("\n\n");
+	// printf("%d\n", data->map_height);
+	// printf("%d\n", data->map_width);
 }
 
 // int	make_char_array(t_data *data)
@@ -168,33 +182,49 @@ int textures(t_data *data, char *line, char **relative_path)
 			check_NO++;
 			while (line[i] == 'N' || line[i] == 'O' || line[i] == ' ')
 				i++;
-			*relative_path = gnl_strdup(&line[i]);
+			data->map.no_path = gnl_strdup(&line[i]);
 			// printf("%s\n", *relative_path);
-			data->textures[0].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[0].tex_width, &data->textures[0].tex_height);
+			// data->textures[0].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[0].tex_width, &data->textures[0].tex_height);
+			//fail image give error
+			// free(*relative_path);
 			return (1);
 		}
 		else if (ft_strchr(line, 'S') && ft_strchr(line, 'O') && check_SO < 2)
 		{
 			while (line[i] == ' ' || line[i] == 'S' || line[i] == 'O')
 				i++;
-			*relative_path = gnl_strdup(&line[i]);
-			data->textures[1].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[1].tex_width, &data->textures[1].tex_height);
+			data->map.so_path = gnl_strdup(&line[i]);
+			// data->textures[1].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[1].tex_width, &data->textures[1].tex_height);
+			// free(*relative_path);
 			return (1);
 		}
 		else if (ft_strchr(line, 'W') && ft_strchr(line, 'E') && check_WE < 2)
 		{
 			while (line[i] == ' ' || line[i] == 'W' || line[i] == 'E')
 				i++;
-			*relative_path = gnl_strdup(&line[i]);
-			data->textures[2].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[2].tex_width, &data->textures[2].tex_height);
+			data->map.we_path = gnl_strdup(&line[i]);
+			// data->textures[2].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[2].tex_width, &data->textures[2].tex_height);
+			// free(*relative_path);
 			return (1);
 		}
 		else if (ft_strchr(line, 'E') && ft_strchr(line, 'A') && check_EA < 2)
 		{
 			while (line[i] == ' ' || line[i] == 'E' || line[i] == 'A')
 				i++;
-			*relative_path = gnl_strdup(&line[i]);
-			data->textures[3].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[3].tex_width, &data->textures[3].tex_height);
+			data->map.ea_path = gnl_strdup(&line[i]);
+			// data->textures[3].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[3].tex_width, &data->textures[3].tex_height);
+			// free(*relative_path);
+			return (1);
+		}
+		else if (line[0] == 'S' && line[1] == ' ')
+		{
+			i = 2;
+			while (line[i] == ' ')
+				i++;
+			data->map.sprite= gnl_strdup(&line[i]);
+			// printf("%s\n", *relative_path);
+			// data->textures[4].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[4].tex_width, &data->textures[4].tex_height);
+			// free(*relative_path);
 			return (1);
 		}
 		if (check_NO > 1 || check_SO > 1 || check_EA > 1 || check_WE > 1)
@@ -317,15 +347,10 @@ int		save_map_in_array(t_data *data, char **argv)
 		}
 		textures(data, line, &relative_path);
 		color(data, line);
-		if (line[0] == 'S' && line[1] == ' ')
+	
+		if (line[0] == '1' || ft_strnstr(line, "111", ft_strlen(line)) || ft_strnstr(line, "000", ft_strlen(line)))
 		{
-			i = 2;
-			while (line[i] == ' ')
-				i++;
-			data->map.sprite == gnl_strdup(&line[i]);
-		}
-		else if (line[0] >= '0' && line[0] <= '9' || line[0] == ' ')
-		{
+			printf("%s\n", line);
 			int i = 0;
 			int length = ft_strlen(line);
 			line[length] = '\n';
