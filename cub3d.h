@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/21 17:37:12 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/26 11:55:23 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/29 14:23:13 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@
 #include "./libft/libft.h"
 #include <unistd.h>
 #include <math.h>
-
-
-#define screenWidth 640
-#define screenHeight 480
-#define texWidth 64
-#define texHeight 64
-#define mapWidth 24
-#define mapHeight 24
 
 //remove!!!!!
 #include <stdio.h>
@@ -39,24 +31,15 @@
 #define ROTATE_RIGHT 65363
 #define ROTATE_LEFT 65361
 
-//SPRITES??
-#define num_sprites 12
-
-
-
-
 typedef struct s_sprite {
 	double 	x;
 	double 	y;
 	int 	texture;
+	int  	first;
+	int second;
 
 }				t_sprite;
 
-typedef struct s_error {
-	int check_double_R;
-
-
-}				t_error;
 
 typedef struct	s_mlx {
 	void	*mlx;
@@ -108,7 +91,6 @@ typedef struct  s_tex {
 }               t_tex;
 
 typedef struct s_textures {
-  	unsigned int buffer[screenHeight][screenWidth];
 	void  *tex;
 	int *texture_adrr;
 
@@ -171,11 +153,10 @@ typedef struct s_data {
 	t_map	map;
 	t_color	color;
 	t_raycasting	ray;
-	t_error error;
 	t_move	move;
 	t_textures textures[5];
 	t_tex tex;
-	t_sprite sprite[num_sprites];
+	t_sprite *sprite;
 	int 	map_width;
 	int 	map_height;
 	int x;
@@ -184,10 +165,11 @@ typedef struct s_data {
 	int 	height;
 	int		str_cnt;
 	char *file;
+	int 			num_sprite;
 	unsigned int **buffer;
 	double 		*zbuffer;
-	int 		sprite_order[num_sprites];
-	double 		sprite_distance[num_sprites];
+	int 		*sprite_order;
+	double 		*sprite_distance;
 	double 		sprite_x;
 	double 		sprite_y;
 	double 		inv_det;
@@ -209,7 +191,6 @@ int 	mouse_movement(int x_pos, int y_pos, t_data *data);
 int 		mouse_enter(t_data *data);
 int 		mouse_leave(t_data *data);
 int 	red_cross(int button, t_data *data);
-// int 	render_next_frame(t_data *data);
 int		print_circle(int x, int y, int r, t_data *data);
 int 	print_rectangle(int xw, int yw, int height, int width, unsigned int col, t_data *data);
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -218,12 +199,10 @@ int		create_trgb(int r, int g, int b);
 int		save_map_in_array(t_data *data, char **argv);
 void	print_textures(t_data *data);
 void	print_map(t_data *data);
-// int 	wasd(int keycode, t_data *data);
 int 	background(t_data *data, int col);
 
 int 	save_textures(t_data *data);
 int		map_int_array(t_data *data);
-int	make_char_array(t_data *data);
 int	make_int_array(t_data *data);
 void valid_map_check(int x, int y, t_data *data);
 void change_map_back(int x, int y, t_data *data);
@@ -238,11 +217,12 @@ int 	cubed_strchr(char *str, char c);
 //CUB3D FUNCTIONS NEW
 int 	get_all_data(t_data *data, char **argv);
 int 	setting_mlx(t_data *data);
+int		setting_mlx_2(t_data *data);
 int textures(t_data *data, char *line, char **relative_path);
 int setting_raycasting(t_data *data);
 void	exit_program_please(t_data *data, char *str);
 int 	raycasting(t_data *data);
-int 	draw_line(int x, int drawStart, int drawEnd, int color, t_data *data);
+int 	draw_line(int drawStart, int drawEnd, int color, t_data *data);
 int 	key_input(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
 int		main_loop(t_data *data);
@@ -253,8 +233,22 @@ int 	textures_make(t_data *data);
 int 	draw_buffer(unsigned int **buffer, int x, int y, t_data *data);
 unsigned int    add_shade(double distance, unsigned int color);
 int which_texture(t_data *data);
-void sort_sprites(int* order, double* dist, int amount);
-int 	sprites(t_data *data);
+void		bubble_sort(t_data *data);
+			int 	sprites(t_data *data);
 int is_sprite_visible(t_data *data, int color, int i);
+void		swap(t_data *data, int j);
+int 	loop_through_sprites(t_data *data, int i);
+int search_color_sprite(t_data *data, int stripe);
+int 	set_sprite_info(t_data *data, int i);
+int 	draw_textures(t_data *data);
+int		draw_textures_2(t_data *data);
+int 	check_right(t_data *data, int keycode);
+int 	check_left(t_data *data, int keycode);
+int 	check_w(t_data *data, int keycode);
+int 	check_s(t_data *data, int keycode);
+int 	check_a(t_data *data, int keycode);
+int check_d(t_data *data, int keycode);
+int		check_type_2(t_data *data);
+int save_map(t_data *data, char *line);
 
 #endif

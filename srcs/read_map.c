@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 11:36:25 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/26 11:40:00 by liz           ########   odam.nl         */
+/*   Updated: 2020/05/29 14:25:19 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,18 @@ int	make_int_array(t_data *data)
 		data->map.array_map_int[i] = ft_calloc(data->map_width + 1, sizeof(int));
 		i++;
 	}
-
+	if (!data->map.array_map_int)
+		exit_program_please(data, "Malloc has failed!\n");
 	i = 0;
+	while (data->map.map[i] != '\0')
+	{
+		if (data->map.map[i] == '2')
+			data->num_sprite++;
+		i++;
+	}
+	 
+	i = 0;
+	data->sprite = malloc(data->num_sprite * sizeof(t_sprite));
 	while (data->map.map[i] != '\0')
 	{
 		if (data->map.map[i] == '\n')
@@ -76,11 +86,11 @@ int	make_int_array(t_data *data)
 		}
 		if (data->map.map[i] == '2')
 		{
-			data->sprite[sprites].x = (double)chars;
-			data->sprite[sprites].y = (double)array;
+			data->sprite[sprites].x = (double)chars + 0.5;
+			data->sprite[sprites].y = (double)array + 0.5;
 			data->sprite[sprites].texture = 2;
 			data->map.array_map_int[array][chars] = data->map.map[i] - 48;
-			printf("x = %f | y = %f\n", data->sprite[sprites].x, data->sprite[sprites].y);
+			// printf("x = %f | y = %f\n", data->sprite[sprites].x, data->sprite[sprites].y);
 			chars++;
 			sprites++;
 		}
@@ -92,46 +102,7 @@ int	make_int_array(t_data *data)
 		}
 		i++;
 	}
-	//  int x = 0;
-	// 	int y = 0;
-	// 	while(x < data->map_height)
-	// {
-	// 	while (y < data->map_width)
-	// 	{
-	// 		printf("|%d|", data->map.array_map_int[x][y]);
-	// 		y++;
-	// 	}
-	// 	x++;
-	// 	y = 0;
-	// 	printf("\n");
-	// }
-	// printf("\n\n");
-	// printf("%d\n", data->map_height);
-	// printf("%d\n", data->map_width);
 }
-
-// int	make_char_array(t_data *data)
-// {
-// 	int i;
-// 	int array = 0;
-// 	int chars = 0;
-
-// 	i = 0;
-// 	while (data->map.map[i] != '\0')
-// 	{
-// 		if (data->map.map[i] == '\n')
-// 		{
-// 		chars = 0;
-// 		array++;
-// 		}
-// 		else if (data->map.map[i] != ' ')
-// 		{
-// 			data->map.array_map_char[array][chars] = data->map.map[i];
-// 			chars++;
-// 		}	
-// 		i++;
-// 	}
-// }
 
 int		find_width_height(t_data *data, char *line)
 {
@@ -183,10 +154,6 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == 'N' || line[i] == 'O' || line[i] == ' ')
 				i++;
 			data->map.no_path = gnl_strdup(&line[i]);
-			// printf("%s\n", *relative_path);
-			// data->textures[0].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[0].tex_width, &data->textures[0].tex_height);
-			//fail image give error
-			// free(*relative_path);
 			return (1);
 		}
 		else if (ft_strchr(line, 'S') && ft_strchr(line, 'O') && check_SO < 2)
@@ -194,8 +161,6 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == ' ' || line[i] == 'S' || line[i] == 'O')
 				i++;
 			data->map.so_path = gnl_strdup(&line[i]);
-			// data->textures[1].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[1].tex_width, &data->textures[1].tex_height);
-			// free(*relative_path);
 			return (1);
 		}
 		else if (ft_strchr(line, 'W') && ft_strchr(line, 'E') && check_WE < 2)
@@ -203,8 +168,6 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == ' ' || line[i] == 'W' || line[i] == 'E')
 				i++;
 			data->map.we_path = gnl_strdup(&line[i]);
-			// data->textures[2].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[2].tex_width, &data->textures[2].tex_height);
-			// free(*relative_path);
 			return (1);
 		}
 		else if (ft_strchr(line, 'E') && ft_strchr(line, 'A') && check_EA < 2)
@@ -212,8 +175,6 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == ' ' || line[i] == 'E' || line[i] == 'A')
 				i++;
 			data->map.ea_path = gnl_strdup(&line[i]);
-			// data->textures[3].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[3].tex_width, &data->textures[3].tex_height);
-			// free(*relative_path);
 			return (1);
 		}
 		else if (line[0] == 'S' && line[1] == ' ')
@@ -222,9 +183,6 @@ int textures(t_data *data, char *line, char **relative_path)
 			while (line[i] == ' ')
 				i++;
 			data->map.sprite= gnl_strdup(&line[i]);
-			// printf("%s\n", *relative_path);
-			// data->textures[4].tex = mlx_xpm_file_to_image(data->mlx.mlx, *relative_path, &data->textures[4].tex_width, &data->textures[4].tex_height);
-			// free(*relative_path);
 			return (1);
 		}
 		if (check_NO > 1 || check_SO > 1 || check_EA > 1 || check_WE > 1)
@@ -350,7 +308,6 @@ int		save_map_in_array(t_data *data, char **argv)
 	
 		if (line[0] == '1' || ft_strnstr(line, "111", ft_strlen(line)) || ft_strnstr(line, "000", ft_strlen(line)))
 		{
-			printf("%s\n", line);
 			int i = 0;
 			int length = ft_strlen(line);
 			line[length] = '\n';
@@ -360,6 +317,11 @@ int		save_map_in_array(t_data *data, char **argv)
 		}
 		free(line);	
 	}
+		if (!data->map.no_path || !data->map.so_path || !data->map.ea_path || !data->map.we_path || !data->map.sprite)
+		{
+			printf("hello\n");
+			exit_program_please(data, "Malloc has failed!\n");
+		}
 
 	// printf("%s\n\n", data->map.map);
 	return (str_cnt);

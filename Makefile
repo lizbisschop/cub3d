@@ -6,7 +6,7 @@
 #    By: liz <liz@student.codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/21 17:37:27 by liz           #+#    #+#                  #
-#    Updated: 2020/05/26 11:31:01 by liz           ########   odam.nl          #
+#    Updated: 2020/05/29 13:42:17 by liz           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC = cub3d_real.c \
 ./srcs/read_map.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
 ./srcs/valid_map_check.c get_all_data.c img_filling.c exit.c \
 raycasting.c ./keys.c ./main_loop.c functions.c \
-textures.c sprites.c
+textures.c sprites.c bubble_sort.c keys_2.c check_type.c
 
 LIBLIBFT = libft.a
 
