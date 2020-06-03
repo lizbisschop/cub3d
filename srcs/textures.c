@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/05 10:39:35 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 12:21:06 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/01 11:52:29 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		which_texture(t_data *data)
 {

@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 12:22:50 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 14:01:04 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/01 11:33:37 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	ft_putstr(char *str)
 {

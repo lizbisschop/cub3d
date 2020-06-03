@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   functions.c                                        :+:    :+:            */
+/*   img_filling.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/05/02 11:15:36 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/04 11:10:15 by liz           ########   odam.nl         */
+/*   Created: 2020/04/16 11:58:07 by liz           #+#    #+#                 */
+/*   Updated: 2020/06/01 11:49:57 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-double	ft_abs(double i)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	static int j;
-	j++;
-	if (i < 0)
-		i = (i * -1);
-	return (i);
+	char *dst;
+
+	dst = data->mlx.addr + (y * data->mlx.line_length +
+	x * (data->mlx.bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }

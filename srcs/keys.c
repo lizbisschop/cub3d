@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/23 11:45:37 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 13:24:40 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/01 11:51:09 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		key_release(int keycode, t_data *data)
 {

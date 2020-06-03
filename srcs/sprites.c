@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 10:40:18 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 11:48:09 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/01 11:51:55 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int			search_color_sprite(t_data *data, int stripe)
 {

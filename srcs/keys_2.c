@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/29 13:24:43 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 13:24:55 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/01 11:50:26 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		check_left(t_data *data, int keycode)
 {

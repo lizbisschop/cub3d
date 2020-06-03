@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/14 11:22:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 12:02:22 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/01 11:47:04 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		what_to_draw(t_data *data)
 {

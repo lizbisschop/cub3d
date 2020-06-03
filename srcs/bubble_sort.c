@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/29 11:47:40 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 11:47:51 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/01 11:31:58 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void		swap(t_data *data, int j)
 {

@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/21 17:37:12 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 14:23:13 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/03 11:13:25 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,15 @@ typedef struct s_data {
 	t_textures textures[5];
 	t_tex tex;
 	t_sprite *sprite;
+	int 	chars;
+	int 	array;
+	int sprites;
+	// int check_f;
+	// int check_double_f;
+	// int check_com_f;
+	// int check_c;
+	// int check_double_c;
+	// int check_com_c;
 	int 	map_width;
 	int 	map_height;
 	int x;
@@ -218,7 +227,7 @@ int 	cubed_strchr(char *str, char c);
 int 	get_all_data(t_data *data, char **argv);
 int 	setting_mlx(t_data *data);
 int		setting_mlx_2(t_data *data);
-int textures(t_data *data, char *line, char **relative_path);
+int textures(t_data *data, char *line);
 int setting_raycasting(t_data *data);
 void	exit_program_please(t_data *data, char *str);
 int 	raycasting(t_data *data);
@@ -250,5 +259,18 @@ int 	check_a(t_data *data, int keycode);
 int check_d(t_data *data, int keycode);
 int		check_type_2(t_data *data);
 int save_map(t_data *data, char *line);
+int 	save_map_width_height(t_data *data);
+int 	malloc_array_map(t_data *data);
+int 	save_int_array(t_data *data);
+int if_statements_array(t_data *data, int i);
+int 	number_is_found(t_data *data, int *chars, int *array, int i);
+int 	find_width_height_2(t_data *data, char *line);
+int		find_width_height(t_data *data, char *line);
+int color(t_data *data, char *line);
+int set_checks(t_data *data);
+int		find_floor_color(t_data *data, char *line);
+int		check_floor_color(t_data *data, char *line, int *i, int check_com_f);
+int		find_color(t_data *data, char *line);
+int		check_color(t_data *data, char *line, int *i, int check_com_c);
 
 #endif

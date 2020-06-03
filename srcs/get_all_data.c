@@ -6,11 +6,11 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 11:46:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/05/29 13:35:09 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/02 14:28:39 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		setting_mlx_2(t_data *data)
 {
@@ -71,6 +71,9 @@ int		get_all_data(t_data *data, char **argv)
 
 	data->num_sprite = 0;
 	save_map_in_array(data, argv);
+	if (!data->map.no_path || !data->map.so_path ||
+	!data->map.ea_path || !data->map.we_path || !data->map.sprite)
+		exit_program_please(data, "Malloc has failed!\n");
 	setting_mlx(data);
 	setting_raycasting(data);
 	make_int_array(data);
