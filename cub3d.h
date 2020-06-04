@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/21 17:37:12 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/03 11:13:25 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/04 13:40:15 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 #define D_KEY 100
 #define ROTATE_RIGHT 65363
 #define ROTATE_LEFT 65361
+#define UP 65362
+#define DOWN 65364
 
 typedef struct s_sprite {
 	double 	x;
@@ -45,6 +47,7 @@ typedef struct	s_mlx {
 	void	*mlx;
 	void	*mlx_win;
 	void	*img;
+	void	*img_2;
     char    *addr;
     int     bits_per_pixel;
     int     endian;
@@ -160,12 +163,6 @@ typedef struct s_data {
 	int 	chars;
 	int 	array;
 	int sprites;
-	// int check_f;
-	// int check_double_f;
-	// int check_com_f;
-	// int check_c;
-	// int check_double_c;
-	// int check_com_c;
 	int 	map_width;
 	int 	map_height;
 	int x;
@@ -192,85 +189,79 @@ typedef struct s_data {
 	int 		draw_start_x;
 	int 		draw_end_x;
 }           t_data;
-
-
-int		set_struct(t_data *data);
-int             close_window(int keycode, t_data *data);
-int 	mouse_movement(int x_pos, int y_pos, t_data *data);
-int 		mouse_enter(t_data *data);
-int 		mouse_leave(t_data *data);
-int 	red_cross(int button, t_data *data);
-int		print_circle(int x, int y, int r, t_data *data);
-int 	print_rectangle(int xw, int yw, int height, int width, unsigned int col, t_data *data);
-void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		hooks(t_data *data);
-int		create_trgb(int r, int g, int b);
-int		save_map_in_array(t_data *data, char **argv);
-void	print_textures(t_data *data);
-void	print_map(t_data *data);
-int 	background(t_data *data, int col);
-
-int 	save_textures(t_data *data);
-int		map_int_array(t_data *data);
-int	make_int_array(t_data *data);
-void valid_map_check(int x, int y, t_data *data);
-void change_map_back(int x, int y, t_data *data);
-
-//LIBFT FILES
-int	ft_atoi(const char *str);
-char	*ft_strdup(const char *s1);
-void	ft_putstr(char *str);
-int 	cubed_strchr(char *str, char c);
-
-
-//CUB3D FUNCTIONS NEW
-int 	get_all_data(t_data *data, char **argv);
-int 	setting_mlx(t_data *data);
-int		setting_mlx_2(t_data *data);
-int textures(t_data *data, char *line);
-int setting_raycasting(t_data *data);
-void	exit_program_please(t_data *data, char *str);
-int 	raycasting(t_data *data);
-int 	draw_line(int drawStart, int drawEnd, int color, t_data *data);
-int 	key_input(int keycode, t_data *data);
-int		key_release(int keycode, t_data *data);
-int		main_loop(t_data *data);
-int 	raycasting_loop(t_data *data);
-double	ft_abs(double i);
-int 	check_type(t_data *data);
-int 	textures_make(t_data *data);
-int 	draw_buffer(unsigned int **buffer, int x, int y, t_data *data);
-unsigned int    add_shade(double distance, unsigned int color);
-int which_texture(t_data *data);
-void		bubble_sort(t_data *data);
-			int 	sprites(t_data *data);
-int is_sprite_visible(t_data *data, int color, int i);
-void		swap(t_data *data, int j);
-int 	loop_through_sprites(t_data *data, int i);
-int search_color_sprite(t_data *data, int stripe);
-int 	set_sprite_info(t_data *data, int i);
-int 	draw_textures(t_data *data);
-int		draw_textures_2(t_data *data);
-int 	check_right(t_data *data, int keycode);
-int 	check_left(t_data *data, int keycode);
-int 	check_w(t_data *data, int keycode);
-int 	check_s(t_data *data, int keycode);
-int 	check_a(t_data *data, int keycode);
-int check_d(t_data *data, int keycode);
-int		check_type_2(t_data *data);
-int save_map(t_data *data, char *line);
-int 	save_map_width_height(t_data *data);
-int 	malloc_array_map(t_data *data);
-int 	save_int_array(t_data *data);
-int if_statements_array(t_data *data, int i);
-int 	number_is_found(t_data *data, int *chars, int *array, int i);
-int 	find_width_height_2(t_data *data, char *line);
-int		find_width_height(t_data *data, char *line);
-int color(t_data *data, char *line);
-int set_checks(t_data *data);
-int		find_floor_color(t_data *data, char *line);
-int		check_floor_color(t_data *data, char *line, int *i, int check_com_f);
-int		find_color(t_data *data, char *line);
-int		check_color(t_data *data, char *line, int *i, int check_com_c);
+int				set_struct(t_data *data);
+int				close_window(int keycode, t_data *data);
+int				mouse_movement(int x_pos, int y_pos, t_data *data);
+int				mouse_enter(t_data *data);
+int				mouse_leave(t_data *data);
+int				red_cross(int button, t_data *data);
+int				print_circle(int x, int y, int r, t_data *data);
+int				print_rectangle(int xw, int yw, int height,
+					int width, unsigned int col, t_data *data);
+void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int				hooks(t_data *data);
+int				create_trgb(int r, int g, int b);
+int				save_map_in_array(t_data *data, char **argv);
+void			print_textures(t_data *data);
+void			print_map(t_data *data);
+int				background(t_data *data, int col);
+int				save_textures(t_data *data);
+int				map_int_array(t_data *data);
+int				make_int_array(t_data *data);
+void			valid_map_check(int x, int y, t_data *data);
+void			change_map_back(int x, int y, t_data *data);
+int				ft_atoi(const char *str);
+char			*ft_strdup(const char *s1);
+void			ft_putstr(char *str);
+int				cubed_strchr(char *str, char c);
+int				get_all_data(t_data *data, char **argv);
+int				setting_mlx(t_data *data);
+int				setting_mlx_2(t_data *data);
+int				textures(t_data *data, char *line);
+int				setting_raycasting(t_data *data);
+void			exit_program_please(t_data *data, char *str);
+int				raycasting(t_data *data);
+int				key_input(int keycode, t_data *data);
+int				key_release(int keycode, t_data *data);
+int				main_loop(t_data *data);
+int				raycasting_loop(t_data *data);
+double			ft_abs(double i);
+int				check_type(t_data *data);
+int				textures_make(t_data *data);
+int				draw_buffer(unsigned int **buffer,
+						int x, int y, t_data *data);
+unsigned int	add_shade(double distance, unsigned int color);
+int				which_texture(t_data *data);
+void			bubble_sort(t_data *data);
+int				sprites(t_data *data);
+int				is_sprite_visible(t_data *data, int color, int i);
+void			swap(t_data *data, int j);
+int				loop_through_sprites(t_data *data, int i);
+int				search_color_sprite(t_data *data, int stripe);
+int				set_sprite_info(t_data *data, int i);
+int				draw_textures(t_data *data);
+int				draw_textures_2(t_data *data);
+int				check_right(t_data *data, int keycode);
+int				check_left(t_data *data, int keycode);
+int				check_w(t_data *data, int keycode);
+int				check_s(t_data *data, int keycode);
+int				check_a(t_data *data, int keycode);
+int				check_d(t_data *data, int keycode);
+int				check_type_2(t_data *data);
+int				save_map(t_data *data, char *line);
+int				save_map_width_height(t_data *data);
+int				malloc_array_map(t_data *data);
+int				save_int_array(t_data *data);
+int				if_statements_array(t_data *data, int i);
+int				number_is_found(t_data *data, int *chars, int *array, int i);
+int				find_width_height_2(t_data *data, char *line);
+int				find_width_height(t_data *data, char *line);
+int				color(t_data *data, char *line);
+int				set_checks(t_data *data);
+int				find_floor_color(t_data *data, char *line);
+int				check_floor_color(t_data *data,
+					char *line, int *i, int check_com_f);
+int				find_color(t_data *data, char *line);
+int				check_color(t_data *data, char *line, int *i, int check_com_c);
 
 #endif

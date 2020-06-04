@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 13:39:13 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/03 11:31:15 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/04 13:36:48 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,20 @@ int		we_ea(t_data *data, char *line)
 
 int		textures(t_data *data, char *line)
 {
-	int i;
+	int			i;
+	static int	check_sprites;
 
 	i = 0;
 	no_so(data, line);
 	we_ea(data, line);
 	if (line[0] == 'S' && line[1] == ' ')
 	{
+		check_sprites++;
 		i = 2;
 		while (line[i] == ' ')
 			i++;
 		data->map.sprite = gnl_strdup(&line[i]);
 	}
+	if (check_sprites > 1)
+		exit_program_please(data, "Wrong map input\n");
 }

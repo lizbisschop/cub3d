@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 10:40:18 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/01 11:51:55 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/04 13:35:49 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			set_sprite_info(t_data *data, int i)
 	data->sprite_x = data->sprite[data->sprite_order[i]].x - data->ray.pos_x;
 	data->sprite_y = data->sprite[data->sprite_order[i]].y - data->ray.pos_y;
 	data->inv_det = 1.0 / (data->ray.plane_x *
-	data->ray.dir_y - data->ray.plane_y * data->ray.dir_x);
+	data->ray.dir_y - data->ray.dir_x * data->ray.plane_y);
 	data->transform_x = data->inv_det *
 	(data->ray.dir_y * data->sprite_x - data->ray.dir_x * data->sprite_y);
 	data->transform_y = data->inv_det *
@@ -55,13 +55,6 @@ int			set_sprite_info(t_data *data, int i)
 	(1 + data->transform_x / data->transform_y));
 	data->sprite_height = abs((int)(data->height / (data->transform_y)));
 	data->draw_start_y = -data->sprite_height / 2 + data->height / 2;
-}
-
-int			loop_through_sprites(t_data *data, int i)
-{
-	int stripe;
-
-	set_sprite_info(data, i);
 	if (data->draw_start_y < 0)
 		data->draw_start_y = 0;
 	data->draw_end_y = data->sprite_height / 2 + data->height / 2;
@@ -74,6 +67,13 @@ int			loop_through_sprites(t_data *data, int i)
 	data->draw_end_x = data->sprite_width / 2 + data->sprite_screen_x;
 	if (data->draw_end_x >= data->width)
 		data->draw_end_x = data->width - 1;
+}
+
+int			loop_through_sprites(t_data *data, int i)
+{
+	int stripe;
+
+	set_sprite_info(data, i);
 	stripe = data->draw_start_x;
 	while (stripe < data->draw_end_x)
 	{
@@ -96,8 +96,8 @@ int			sprites(t_data *data)
 		(data->ray.pos_y - data->sprite[i].y));
 		i++;
 	}
-	i = 0;
 	bubble_sort(data);
+	i = 0;
 	while (i < data->num_sprite)
 	{
 		loop_through_sprites(data, i);

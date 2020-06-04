@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 11:46:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/02 14:28:39 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/04 13:40:48 by liz           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int		setting_mlx_2(t_data *data)
 	data->textures[4].tex = mlx_xpm_file_to_image(data->mlx.mlx,
 	data->map.sprite, &data->textures[4].tex_width,
 	&data->textures[4].tex_height);
+	if (!data->textures[0].tex || !data->textures[1].tex ||
+	!data->textures[2].tex || !data->textures[3].tex || !data->textures[4].tex)
+		exit_program_please(data, "Something wrogn with textures\n");
 }
 
 int		setting_mlx(t_data *data)
@@ -43,14 +46,8 @@ int		setting_mlx(t_data *data)
 
 	i = 0;
 	setting_mlx_2(data);
-	data->buffer = malloc(sizeof(unsigned int *) * data->height);
-	while (i < data->height)
-	{
-		data->buffer[i] = malloc(sizeof(unsigned int ) * data->width);
-		i++;
-	}
 	data->zbuffer = malloc(sizeof(double) * data->width);
-	if (!data->buffer || !data->zbuffer)
+	if (!data->zbuffer)
 		exit_program_please(data, "Malloc has failed!\n");
 }
 
@@ -70,6 +67,7 @@ int		get_all_data(t_data *data, char **argv)
 	int y;
 
 	data->num_sprite = 0;
+	data->sprites = 0;
 	save_map_in_array(data, argv);
 	if (!data->map.no_path || !data->map.so_path ||
 	!data->map.ea_path || !data->map.we_path || !data->map.sprite)
