@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 13:22:52 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/03 13:28:24 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 12:15:58 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		find_width_height_2(t_data *data, char *line)
 	data->height = ft_atoi(&line[i]);
 	if (data->height == 0 || data->width == 0)
 		exit_program_please(data, "There is an error in the window\n");
+		return (0);
 }
 
 int		find_width_height(t_data *data, char *line)
@@ -51,4 +52,5 @@ int		find_width_height(t_data *data, char *line)
 		i++;
 	}
 	find_width_height_2(data, line);
+	return (0);
 }

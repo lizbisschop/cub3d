@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/16 11:46:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/04 13:40:48 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 15:49:19 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,70 @@ int		setting_mlx_2(t_data *data)
 	data->mlx.img = mlx_new_image(data->mlx.mlx, data->width, data->height);
 	data->mlx.addr = mlx_get_data_addr(data->mlx.img,
 	&data->mlx.bits_per_pixel, &data->mlx.line_length, &data->mlx.endian);
+	if (ft_strnstr(data->map.no_path, "xpm", ft_strlen(data->map.no_path)))
+	{
 	data->textures[0].tex = mlx_xpm_file_to_image(data->mlx.mlx,
 	data->map.no_path, &data->textures[0].tex_width,
 	&data->textures[0].tex_height);
+	}
+	else
+	{
+		data->textures[0].tex = mlx_png_file_to_image(data->mlx.mlx,
+		data->map.no_path, &data->textures[0].tex_width,
+		&data->textures[0].tex_height);
+	}
+	if (ft_strnstr(data->map.so_path, "xpm", ft_strlen(data->map.so_path)))
+	{
 	data->textures[1].tex = mlx_xpm_file_to_image(data->mlx.mlx,
 	data->map.so_path, &data->textures[1].tex_width,
 	&data->textures[1].tex_height);
-	data->textures[2].tex = mlx_xpm_file_to_image(data->mlx.mlx,
-	data->map.we_path, &data->textures[2].tex_width,
-	&data->textures[2].tex_height);
-	data->textures[3].tex = mlx_xpm_file_to_image(data->mlx.mlx,
-	data->map.ea_path, &data->textures[3].tex_width,
-	&data->textures[3].tex_height);
+	}
+	else
+	{
+		data->textures[1].tex = mlx_png_file_to_image(data->mlx.mlx,
+		data->map.so_path, &data->textures[1].tex_width,
+		&data->textures[1].tex_height);
+	}
+	if (ft_strnstr(data->map.we_path, "xpm", ft_strlen(data->map.we_path)))
+	{
+		data->textures[2].tex = mlx_xpm_file_to_image(data->mlx.mlx,
+		data->map.we_path, &data->textures[2].tex_width,
+		&data->textures[2].tex_height);
+	}
+	else 
+	{
+		data->textures[2].tex = mlx_png_file_to_image(data->mlx.mlx,
+		data->map.we_path, &data->textures[2].tex_width,
+		&data->textures[2].tex_height);
+	}
+	if (ft_strnstr(data->map.ea_path, "xpm", ft_strlen(data->map.ea_path)))
+	{
+		data->textures[3].tex = mlx_xpm_file_to_image(data->mlx.mlx,
+		data->map.ea_path, &data->textures[3].tex_width,
+		&data->textures[3].tex_height);
+	}
+	else
+	{
+		data->textures[3].tex = mlx_png_file_to_image(data->mlx.mlx,
+		data->map.ea_path, &data->textures[3].tex_width,
+		&data->textures[3].tex_height);
+	}
+	if (ft_strnstr(data->map.sprite, "xpm", ft_strlen(data->map.sprite)))
+	{
 	data->textures[4].tex = mlx_xpm_file_to_image(data->mlx.mlx,
 	data->map.sprite, &data->textures[4].tex_width,
 	&data->textures[4].tex_height);
+	}
+	else
+	{
+		data->textures[4].tex = mlx_png_file_to_image(data->mlx.mlx,
+		data->map.sprite, &data->textures[4].tex_width,
+		&data->textures[4].tex_height);
+	}
 	if (!data->textures[0].tex || !data->textures[1].tex ||
 	!data->textures[2].tex || !data->textures[3].tex || !data->textures[4].tex)
-		exit_program_please(data, "Something wrogn with textures\n");
+		exit_program_please(data, "Something wrong with textures\n");
+	return (0);
 }
 
 int		setting_mlx(t_data *data)
@@ -49,6 +95,7 @@ int		setting_mlx(t_data *data)
 	data->zbuffer = malloc(sizeof(double) * data->width);
 	if (!data->zbuffer)
 		exit_program_please(data, "Malloc has failed!\n");
+	return (0);
 }
 
 int		setting_raycasting(t_data *data)
@@ -59,6 +106,7 @@ int		setting_raycasting(t_data *data)
 	data->move.y = 0;
 	data->ray.move_speed = 0.09;
 	data->ray.rot_speed = 0.09;
+	return (0);
 }
 
 int		get_all_data(t_data *data, char **argv)
@@ -68,7 +116,11 @@ int		get_all_data(t_data *data, char **argv)
 
 	data->num_sprite = 0;
 	data->sprites = 0;
+	data->chars = 0;
+	data->array = 0;
 	save_map_in_array(data, argv);
+	int i = 0;
+	int j = 0;
 	if (!data->map.no_path || !data->map.so_path ||
 	!data->map.ea_path || !data->map.we_path || !data->map.sprite)
 		exit_program_please(data, "Malloc has failed!\n");
@@ -86,4 +138,5 @@ int		get_all_data(t_data *data, char **argv)
 	if (data->map.valid_map == 1)
 		exit_program_please(data, "Not a valid map!!\n");
 	change_map_back(x, y, data);
+	return (0);
 }

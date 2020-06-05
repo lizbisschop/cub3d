@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 10:40:18 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/04 13:35:49 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 12:21:27 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int			search_color_sprite(t_data *data, int stripe)
 			y++;
 		}
 	}
+	return (0);
 }
 
 int			set_sprite_info(t_data *data, int i)
@@ -67,6 +68,7 @@ int			set_sprite_info(t_data *data, int i)
 	data->draw_end_x = data->sprite_width / 2 + data->sprite_screen_x;
 	if (data->draw_end_x >= data->width)
 		data->draw_end_x = data->width - 1;
+		return (0);
 }
 
 int			loop_through_sprites(t_data *data, int i)
@@ -80,6 +82,7 @@ int			loop_through_sprites(t_data *data, int i)
 		search_color_sprite(data, stripe);
 		stripe++;
 	}
+	return (0);
 }
 
 int			sprites(t_data *data)
@@ -103,4 +106,5 @@ int			sprites(t_data *data)
 		loop_through_sprites(data, i);
 		i++;
 	}
+	return (0);
 }

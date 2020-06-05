@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/21 17:37:12 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/04 13:40:15 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 16:51:00 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@
 #include <stdio.h>
 
 //KEYS
-#define ESC 65307
-#define W_KEY 119
-#define A_KEY 97
-#define S_KEY 115
-#define D_KEY 100
-#define ROTATE_RIGHT 65363
-#define ROTATE_LEFT 65361
+#define ESC 53
+#define W_KEY 13
+#define A_KEY 0
+#define S_KEY 1
+#define D_KEY 2
+#define ROTATE_RIGHT 124
+#define ROTATE_LEFT 123
 #define UP 65362
 #define DOWN 65364
+#define RED_CROSS -336460032
 
 typedef struct s_sprite {
 	double 	x;

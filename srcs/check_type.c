@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/29 13:34:48 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/01 11:32:43 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 12:14:26 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		check_type_2(t_data *data)
 		data->ray.plane_x = -0.66;
 		data->ray.plane_y = 0.0;
 	}
+	return (0);
 }
 
 int		check_type(t_data *data)
@@ -47,4 +48,5 @@ int		check_type(t_data *data)
 		data->ray.plane_y = -0.66;
 	}
 	check_type_2(data);
+	return (0);
 }

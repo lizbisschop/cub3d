@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/03 11:36:25 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/03 11:16:43 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 13:57:53 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		map_part_found(t_data *data, char **tmp, char *line)
 	line[length + 1] = '\0';
 	data->map.map = gnl_strjoin(*tmp, line);
 	*tmp = data->map.map;
+	return (0);
 }
 
 int		save_map_in_array(t_data *data, char **argv)
@@ -34,7 +35,7 @@ int		save_map_in_array(t_data *data, char **argv)
 	int		i;
 
 	gnl_count = 1;
-	fd = open(argv[1], O_RDONLY);
+	fd = open("./maps/map_1.cub", O_RDONLY);
 	if (fd == -1)
 		exit_program_please(data, "Map file doesnt exist!\n");
 	tmp = malloc(1);
@@ -52,4 +53,5 @@ int		save_map_in_array(t_data *data, char **argv)
 			map_part_found(data, &tmp, line);
 		free(line);
 	}
+	return (0);
 }

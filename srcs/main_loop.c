@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/22 13:31:53 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/01 11:51:28 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 12:18:19 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,5 @@ int		main_loop(t_data *data)
 {
 	if (data->move.x == 1)
 		raycasting(data);
+	return (0);
 }

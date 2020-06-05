@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:19:04 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/03 11:17:46 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 12:24:39 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		check_color(t_data *data, char *line, int *i, int check_com_c)
 		data->color.b = ft_atoi(&line[*i]);
 	while (line[*i] >= '0' && line[*i] <= '9')
 		(*i)++;
+	return (0);
 }
 
 int		find_color(t_data *data, char *line)
@@ -51,6 +52,7 @@ int		find_color(t_data *data, char *line)
 		data->map.color = create_trgb(data->color.r,
 		data->color.g, data->color.b);
 	}
+	return (0);
 }
 
 int		check_floor_color(t_data *data, char *line, int *i, int check_com_f)
@@ -63,6 +65,7 @@ int		check_floor_color(t_data *data, char *line, int *i, int check_com_f)
 		data->color.b = ft_atoi(&line[*i]);
 	while (line[*i] >= '0' && line[*i] <= '9')
 		(*i)++;
+	return (0);
 }
 
 int		find_floor_color(t_data *data, char *line)
@@ -92,6 +95,7 @@ int		find_floor_color(t_data *data, char *line)
 	}
 	data->map.floor_color = create_trgb(data->color.r,
 	data->color.g, data->color.b);
+	return (0);
 }
 
 int		color(t_data *data, char *line)
@@ -114,4 +118,5 @@ int		color(t_data *data, char *line)
 			exit_program_please(data, "Double line\n");
 		find_color(data, line);
 	}
+	return (0);
 }

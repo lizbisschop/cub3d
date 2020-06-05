@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 10:44:01 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/04 13:35:59 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 14:01:40 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		malloc_array_map(t_data *data)
 
 	i = 0;
 	data->map.array_map_int = malloc(sizeof(int*) * data->map_height + 1);
-	while (i < data->map_width)
+	while (i < data->map_height)
 	{
 		data->map.array_map_int[i] =
 		ft_calloc(data->map_width + 1, sizeof(int));
@@ -26,6 +26,7 @@ int		malloc_array_map(t_data *data)
 	}
 	if (!data->map.array_map_int)
 		exit_program_please(data, "Malloc has failed!\n");
+		return (0);
 }
 
 int		save_map_width_height(t_data *data)
@@ -51,6 +52,7 @@ int		save_map_width_height(t_data *data)
 	}
 	data->map_width = total_chars;
 	malloc_array_map(data);
+	return (0);
 }
 
 int		if_statements_array(t_data *data, int i)
@@ -74,6 +76,7 @@ int		if_statements_array(t_data *data, int i)
 		data->map.array_map_int[data->array][data->chars] = 0;
 		data->chars++;
 	}
+	return (0);
 }
 
 int		save_int_array(t_data *data)
@@ -102,6 +105,7 @@ int		save_int_array(t_data *data)
 		}
 		i++;
 	}
+	return (0);
 }
 
 int		make_int_array(t_data *data)
@@ -118,4 +122,5 @@ int		make_int_array(t_data *data)
 	}
 	data->sprite = malloc(data->num_sprite * sizeof(t_sprite));
 	save_int_array(data);
+	return (0);
 }

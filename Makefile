@@ -6,7 +6,7 @@
 #    By: liz <liz@student.codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/21 17:37:27 by liz           #+#    #+#                  #
-#    Updated: 2020/06/02 13:55:48 by liz           ########   odam.nl          #
+#    Updated: 2020/06/05 15:43:56 by lbisscho      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,36 +21,32 @@ SRC = cub3d_real.c ./srcs/color.c\
 ./srcs/textures.c ./srcs/sprites.c ./srcs/bubble_sort.c ./srcs/keys_2.c ./srcs/check_type.c \
 ./srcs/find_width_height.c ./srcs/find_textures.c ./srcs/find_color.c \
 
-LIBLIBFT = libft.a
-
-FLAGS = -Wall -Wextra -Werror
-
 OBJ = $(SRC:.c=.o)
-
-INC = cub3d.h ./gnl/get_next_line.h ./libft/libft.h ./mlx/mlx.h ./libft/libft.h
-
-MLX = libmlx.a
-
+CFLAGS = -g
+LIBFT = ./libft
+MLX = ./mlx
+.PHONY: all clean fclean re
 all: $(NAME)
-
-$(NAME):$(MLX) $(OBJ) $(LIBLIBFT)
-		gcc $(FLAGS) -o $(NAME) $(INC) $(OBJ) libft.a $(MLX) -lm -lX11 -lXext -g
-
-# $(MLX):
-# 		@make -C ./mlx
-# 		@cp mlx/$(MLX) .
-# $(LIBLIBFT):
-# 		@make -C ./libft
-# 		@cp libft/$(LIBLIBFT) .
-
+$(NAME): $(OBJ)
+	# @make -C $(LIBFT)
+	# @make -C $(MLX)
+	# @cp ./mlx/libmlx.dylib ./libmlx.dylib
+	# @cp ./libft/libft.a ./libft.a
+	@$(CC) -L ./mlx/ -lmlx -framework OpenGL -framework AppKit  \
+	$(OBJ) libft.a -o $(NAME)
+%.o: %.c
+	@printf "Compiling $?\n"
+	@gcc $(CFLAGS) -I ./mlx -I ./libft -c $? -o $@
 clean:
-		@make -C ./libft clean
-		@make -C ./mlx clean
-		rm -f $(OBJ)
-
-fclean:	clean
-		# rm -f $(LIBLIBFT)
-		rm -f $(NAME)
-		# rm -f $(MLX)
-
-re:		fclean all
+	@$(RM) $(OBJ)
+	@$(RM) $(B_OBJ)
+	@$(RM) bonus
+	# @make clean -C $(LIBFT)
+	# @make clean -C $(MLX)
+fclean: clean
+	@$(RM) $(BMP)
+	@$(RM) $(NAME)
+	# @$(RM) libmlx.dylib
+	# @$(RM) libft.a
+	@make fclean -C $(LIBFT)
+re: fclean all

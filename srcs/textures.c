@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/05 10:39:35 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/01 11:52:29 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 12:21:55 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		which_texture(t_data *data)
 		else if (data->ray.pos_y > data->ray.map_y && data->ray.side == 1)
 			data->tex.tex_num = 0;
 	}
+	return (0);
 }
 
 int		draw_textures_2(t_data *data)
@@ -51,6 +52,7 @@ int		draw_textures_2(t_data *data)
 		my_mlx_pixel_put(data, data->ray.x_ray, y, color);
 		y++;
 	}
+	return (0);
 }
 
 int		draw_textures(t_data *data)
@@ -72,6 +74,7 @@ int		draw_textures(t_data *data)
 		my_mlx_pixel_put(data, data->ray.x_ray, y, data->map.floor_color);
 		y++;
 	}
+	return (0);
 }
 
 int		textures_make(t_data *data)
@@ -96,4 +99,5 @@ int		textures_make(t_data *data)
 	data->tex.tex_pos = (data->ray.draw_start - data->height
 	/ 2 + data->ray.line_height / 2) * data->tex.step;
 	draw_textures(data);
+	return (0);
 }

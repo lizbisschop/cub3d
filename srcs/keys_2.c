@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/29 13:24:43 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/01 11:50:26 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 12:17:30 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		check_left(t_data *data, int keycode)
 		data->ray.plane_y = data->ray.old_plane_x * sin(-data->ray.rot_speed)
 		+ data->ray.plane_y * cos(-data->ray.rot_speed);
 	}
+	return (0);
 }
 
 int		check_right(t_data *data, int keycode)
@@ -44,6 +45,7 @@ int		check_right(t_data *data, int keycode)
 		data->ray.plane_y = data->ray.old_plane_x * sin(data->ray.rot_speed)
 		+ data->ray.plane_y * cos(data->ray.rot_speed);
 	}
+	return (0);
 }
 
 int		check_s(t_data *data, int keycode)
@@ -58,6 +60,7 @@ int		check_s(t_data *data, int keycode)
 		* data->ray.move_speed)][(int)(data->ray.pos_x)] != 1)
 			data->ray.pos_y -= data->ray.dir_y * data->ray.move_speed;
 	}
+	return (0);
 }
 
 int		check_w(t_data *data, int keycode)
@@ -72,4 +75,5 @@ int		check_w(t_data *data, int keycode)
 		* data->ray.move_speed)][(int)(data->ray.pos_x)] != 1)
 			data->ray.pos_y += data->ray.dir_y * data->ray.move_speed;
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 13:39:13 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/04 13:36:48 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/05 15:01:18 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		no_so(t_data *data, char *line)
 	}
 	if (check_no > 1 || check_so > 1)
 		exit_program_please(data, "Wrong map input\n");
+		return (0);
 }
 
 int		we_ea(t_data *data, char *line)
@@ -49,7 +50,7 @@ int		we_ea(t_data *data, char *line)
 		check_we++;
 		while (line[i] == ' ' || line[i] == 'W' || line[i] == 'E')
 			i++;
-		data->map.we_path = gnl_strdup(&line[i]);
+		data->map.we_path = ft_strdup(&line[i]);
 	}
 	else if (ft_strchr(line, 'E') && ft_strchr(line, 'A') && check_ea < 2)
 	{
@@ -60,6 +61,7 @@ int		we_ea(t_data *data, char *line)
 	}
 	if (check_we > 1 || check_ea > 1)
 		exit_program_please(data, "Wrong map input\n");
+		return (0);
 }
 
 int		textures(t_data *data, char *line)
@@ -80,4 +82,5 @@ int		textures(t_data *data, char *line)
 	}
 	if (check_sprites > 1)
 		exit_program_please(data, "Wrong map input\n");
+		return (0);
 }
