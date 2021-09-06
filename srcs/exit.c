@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   exit.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: liz <liz@student.codam.nl>                   +#+                     */
+/*   By: lbisscho <lbisscho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/04/16 12:22:50 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/01 11:33:37 by liz           ########   odam.nl         */
+/*   Created: 2020/06/19 11:21:12 by lbisscho      #+#    #+#                 */
+/*   Updated: 2020/06/26 12:04:00 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_putstr(char *str)
 	}
 }
 
-void	exit_program_please(t_data *data, char *str)
+void	exit_program_please(char *str)
 {
 	ft_putstr(str);
 	exit(0);

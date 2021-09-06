@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/23 11:45:37 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/05 16:51:45 by lbisscho      ########   odam.nl         */
+/*   Updated: 2020/06/19 12:20:00 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,61 @@
 
 int		key_release(int keycode, t_data *data)
 {
-	data->move.x = 0;
+	if (keycode == W_KEY)
+		data->move.w = 0;
+	if (keycode == S_KEY)
+		data->move.s = 0;
+	if (keycode == D_KEY)
+		data->move.d = 0;
+	if (keycode == A_KEY)
+		data->move.a = 0;
+	if (keycode == ROTATE_LEFT)
+		data->move.l = 0;
+	if (keycode == ROTATE_RIGHT)
+		data->move.r = 0;
 	return (0);
 }
 
-int		check_d(t_data *data, int keycode)
+void	check_d(t_data *data)
 {
-	if (keycode == D_KEY)
+	if (data->move.d == 1)
 	{
-		if (data->map.array_map_int[(int)data->ray.pos_y]
+		if (data->map.array_map[(int)data->ray.pos_y]
 			[(int)(data->ray.pos_x + data->ray.plane_x
-			* data->ray.move_speed)] == 0)
+			* data->ray.move_speed)] != 1)
 			data->ray.pos_x += data->ray.plane_x
 			* data->ray.move_speed;
-		if (data->map.array_map_int[(int)(data->ray.pos_y
+		if (data->map.array_map[(int)(data->ray.pos_y
 			+ data->ray.plane_y * data->ray.move_speed)]
-			[(int)data->ray.pos_x] == 0)
+			[(int)data->ray.pos_x] != 1)
 			data->ray.pos_y += data->ray.plane_y
 			* data->ray.move_speed;
 	}
-	return (0);
 }
 
-int		check_a(t_data *data, int keycode)
+void	check_a(t_data *data)
 {
-	if (keycode == A_KEY)
+	if (data->move.a == 1)
 	{
-		if (data->map.array_map_int[(int)data->ray.pos_y]
+		if (data->map.array_map[(int)data->ray.pos_y]
 			[(int)(data->ray.pos_x - data->ray.plane_x
-			* data->ray.move_speed)] == 0)
+			* data->ray.move_speed)] != 1)
 			data->ray.pos_x -= data->ray.plane_x
 			* data->ray.move_speed;
-		if (data->map.array_map_int[(int)(data->ray.pos_y
+		if (data->map.array_map[(int)(data->ray.pos_y
 			- data->ray.plane_y * data->ray.move_speed)]
-			[(int)data->ray.pos_x] == 0)
+			[(int)data->ray.pos_x] != 1)
 			data->ray.pos_y -= data->ray.plane_y
 			* data->ray.move_speed;
 	}
-	return (0);
 }
 
-int		key_input(int keycode, t_data *data)
+void	key_input(t_data *data)
 {
-	printf("%d\n", keycode);
-	data->move.x = 1;
-	if (keycode == ESC || keycode == RED_CROSS)
-		exit_program_please(data, "Window has been closed. Goodbye!\n");
-	check_w(data, keycode);
-	check_s(data, keycode);
-	check_right(data, keycode);
-	check_left(data, keycode);
-	check_a(data, keycode);
-	check_d(data, keycode);
-	raycasting(data);
-	return (0);
+	check_w(data);
+	check_s(data);
+	check_right(data);
+	check_left(data);
+	check_a(data);
+	check_d(data);
 }

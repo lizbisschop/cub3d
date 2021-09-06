@@ -6,13 +6,13 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 13:22:52 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/05 12:15:58 by lbisscho      ########   odam.nl         */
+/*   Updated: 2020/07/03 11:08:54 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int		find_width_height_2(t_data *data, char *line)
+void	find_width_height_2(t_data *data, char *line)
 {
 	int i;
 
@@ -26,9 +26,14 @@ int		find_width_height_2(t_data *data, char *line)
 	}
 	i++;
 	data->height = ft_atoi(&line[i]);
-	if (data->height == 0 || data->width == 0)
-		exit_program_please(data, "There is an error in the window\n");
-		return (0);
+	if ((data->height > 1400 && data->save != 1)
+	|| (data->width > 2560 && data->save != 1))
+		mlx_get_screen_size(data->mlx.mlx, &data->width, &data->height);
+	if (data->height <= 0 || data->width <= 0 ||
+	data->height > 16348 || data->width > 16348)
+		exit_program_please("Error\nThere is an error in the window\n");
+	if (data->map_start == 1)
+		exit_program_please("Error\nR after map!\n");
 }
 
 int		find_width_height(t_data *data, char *line)
@@ -44,11 +49,11 @@ int		find_width_height(t_data *data, char *line)
 			if (line[i] == 'R')
 				check_r++;
 			if (check_r > 1)
-				exit_program_please(data, "Wrong map input\n");
+				exit_program_please("Error\nWrong map input\n");
 			i++;
 		}
 		if (ft_isalpha(line[i]) && line[i] != 'R')
-			exit_program_please(data, "Wrong map input\n");
+			exit_program_please("Error\nWrong map input\n");
 		i++;
 	}
 	find_width_height_2(data, line);

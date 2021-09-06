@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/14 11:22:49 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/05 14:34:40 by lbisscho      ########   odam.nl         */
+/*   Updated: 2020/06/29 16:48:03 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		what_to_draw(t_data *data)
 	if (data->ray.draw_end >= data->height)
 		data->ray.draw_end = data->height - 1;
 	textures_make(data);
-	data->zbuffer[data->ray.x_ray] = data->ray.perp_wall_dist;
+	data->sprites.zbuffer[data->ray.x_ray] = data->ray.perp_wall_dist;
 	data->ray.x_ray++;
 	return (0);
 }
@@ -49,13 +49,12 @@ int		wall_is_hit(t_data *data)
 			data->ray.map_y += data->ray.step_y;
 			data->ray.side = 1;
 		}
-		if (data->map.array_map_int[data->ray.map_y][data->ray.map_x] == 1)
+		if (data->map.array_map[data->ray.map_y][data->ray.map_x] == 1)
 		{
 			data->ray.hit = 1;
 			which_texture(data);
 		}
 	}
-			// printf("x = %d | mapX = %d | mapY = %d || posX = %f | pos_y = %f | side = %d | texNum = %d | side = %d | Hit = %d | int_of_place = %d\n", data->ray.x_ray, data->ray.map_x, data->ray.map_y, data->ray.pos_x, data->ray.pos_y, data->ray.side, data->tex.tex_num, data->ray.side, data->ray.hit, data->map.array_map_int[(int)data->ray.pos_y][(int)data->ray.pos_x]);
 	return (0);
 }
 
@@ -103,23 +102,18 @@ int		raycasting_loop(t_data *data)
 	calculating_step(data);
 	wall_is_hit(data);
 	what_to_draw(data);
-	// printf("ray_x = %d | dirX = %lf | dirY = %lf | cameraX = %lf | rayDirX = %lf | rayDirY = %lf | lineHeight = %d | planeX = %lf | planeY = %lf |perpWallDist = %lf| hit = %d | side = %d | stepX = %d | stepY = %d | posX = %lf | pos_y = %lf\n\n\n", data->ray.x_ray, data->ray.dir_x, data->ray.dir_y, data->ray.camera_x, data->ray.ray_dir_x, data->ray.ray_dir_y, data->ray.line_height, data->ray.plane_x, data->ray.plane_y, data->ray.perp_wall_dist, data->ray.hit, data->ray.side, data->ray.step_x, data->ray.step_y, data->ray.pos_x, data->ray.pos_y);
 	return (0);
 }
 
 int		raycasting(t_data *data)
 {
+	key_input(data);
 	data->ray.x_ray = 0;
 	while (data->ray.x_ray < data->width)
 		raycasting_loop(data);
 	sprites(data);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win,
-	data->mlx.img, 0, 0);
-	mlx_destroy_image(data->mlx.mlx, data->mlx.img);
-	data->mlx.img = mlx_new_image(data->mlx.mlx,
-	data->width, data->height);
-	data->mlx.addr = mlx_get_data_addr(data->mlx.img,
-	&data->mlx.bits_per_pixel, &data->mlx.line_length,
-    &data->mlx.endian);
+	if (data->save == 0)
+		mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win,
+		data->mlx.img, 0, 0);
 	return (0);
 }

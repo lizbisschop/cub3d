@@ -6,7 +6,7 @@
 /*   By: liz <liz@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/29 11:47:40 by liz           #+#    #+#                 */
-/*   Updated: 2020/06/04 11:38:38 by liz           ########   odam.nl         */
+/*   Updated: 2020/06/24 11:12:30 by lbisscho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void		swap(t_data *data, int j)
 	int		temp_order;
 	double	temp_dist;
 
-	temp_dist = (data->sprite_distance)[j];
-	temp_order = (data->sprite_order)[j];
-	(data->sprite_distance)[j] = (data->sprite_distance)[j + 1];
-	(data->sprite_distance)[j + 1] = temp_dist;
-	(data->sprite_order)[j] = (data->sprite_order)[j + 1];
-	(data->sprite_order)[j + 1] = temp_order;
+	temp_dist = (data->sprites.sprite_distance)[j];
+	temp_order = (data->sprites.sprite_order)[j];
+	(data->sprites.sprite_distance)[j] = (data->sprites.sprite_distance)[j + 1];
+	(data->sprites.sprite_distance)[j + 1] = temp_dist;
+	(data->sprites.sprite_order)[j] = (data->sprites.sprite_order)[j + 1];
+	(data->sprites.sprite_order)[j + 1] = temp_order;
 }
 
 void		bubble_sort(t_data *data)
@@ -34,13 +34,14 @@ void		bubble_sort(t_data *data)
 	swapped = 1;
 	i = 0;
 	j = 0;
-	while (data->num_sprite - i > 1 && swapped == 1)
+	while (data->sprites.num_sprite - i > 1 && swapped == 1)
 	{
 		swapped = 0;
 		j = 0;
-		while (j < data->num_sprite - i - 1)
+		while (j < data->sprites.num_sprite - i - 1)
 		{
-			if ((data->sprite_distance)[j] < (data->sprite_distance)[j + 1])
+			if ((data->sprites.sprite_distance)[j]
+			< (data->sprites.sprite_distance)[j + 1])
 			{
 				swap(data, j);
 				swapped = 1;
