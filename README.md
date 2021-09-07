@@ -1,6 +1,6 @@
 # cub3d
 
-A graphic project where you can walk around in a world of walls
+A graphics project where you can walk around in a world of walls
 
 # Usage
 
